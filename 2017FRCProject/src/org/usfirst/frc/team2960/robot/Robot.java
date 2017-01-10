@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team2960.robot;
 
+import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,8 +13,13 @@ public class Robot extends IterativeRobot {
   
 	public static OI oi;
 	
+	Joystick stick;
+	DriveTrain drivetrain;
+	
     public void robotInit() {
       oi = new OI();
+      stick = new Joystick(0);
+      drivetrain = new DriveTrain();
     }
     
     public void disabledInit(){
@@ -28,7 +36,7 @@ public class Robot extends IterativeRobot {
     	
     }
     public void periodicStart(){
-    	
+    
     }
     /**
      * This function is called periodically during autonomous
@@ -44,6 +52,7 @@ public class Robot extends IterativeRobot {
     	periodicStart();
     }
     public void teleopPeriodic() {
+    	oi.driveRobot(stick, drivetrain);
         periodicUpdate();
     }
     
