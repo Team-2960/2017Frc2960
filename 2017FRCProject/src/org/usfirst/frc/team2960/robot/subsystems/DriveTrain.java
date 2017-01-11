@@ -3,8 +3,7 @@ package org.usfirst.frc.team2960.robot.subsystems;
 import org.usfirst.frc.team2960.robot.PeriodicUpdate;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
-import com.ctre.CANTalon;
-
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem implements PeriodicUpdate  {
