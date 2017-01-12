@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void periodicUpdate(){
-    	
+    	drivetrain.update();
     }
     public void periodicStart(){
     

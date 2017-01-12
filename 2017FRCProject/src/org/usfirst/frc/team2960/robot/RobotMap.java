@@ -5,5 +5,5 @@ public class RobotMap {
 	public static int rt2 = 1;
 	public static int lt1 = 2;
 	public static int lt2 = 3;
-	
+	public static int photoeye = 0;
 }

@@ -8,7 +8,7 @@ public class OI {
 	
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive){
-		drive.setSpeed(-stick.getRawAxis(1), -stick.getRawAxis(5));
+		drive.setSpeed(-stick.getRawAxis(5), -stick.getRawAxis(1));
 	}
 	
 	public void operateRobot(Joystick stick ){
