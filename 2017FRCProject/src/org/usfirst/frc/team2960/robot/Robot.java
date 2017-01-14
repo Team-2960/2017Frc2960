@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2960.robot;
 
+import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -15,11 +16,12 @@ public class Robot extends IterativeRobot {
 	
 	Joystick stick;
 	DriveTrain drivetrain;
-	
+	Camera cam;
     public void robotInit() {
       oi = new OI();
       stick = new Joystick(0);
       drivetrain = new DriveTrain();
+      cam = new Camera();
     }
     
     public void disabledInit(){
@@ -34,9 +36,11 @@ public class Robot extends IterativeRobot {
     
     public void periodicUpdate(){
     	drivetrain.update();
+    	cam.update();
     }
     public void periodicStart(){
-    
+    	cam.start();
+    	drivetrain.start();
     }
     /**
      * This function is called periodically during autonomous
