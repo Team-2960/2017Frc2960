@@ -27,7 +27,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	}
 	
 	private void startThread(){
-		visionThread = new VisionThread(camera, new Pipeline(), pipeline -> {
+		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 			
 		});
 	}
