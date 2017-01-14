@@ -16,6 +16,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	
 	private VisionThread visionThread;
 	private double centerX = 0.0;
+	private double centerX2 = 0.0;
 	
 	private final Object imgLock = new Object();
 	
@@ -35,6 +36,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 				Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
 				synchronized (imgLock){
 					centerX = r.x + (r.width / 2);
+					centerX2 = r2.x + (r2.width / 2);
 				}
 			}
 		});
@@ -45,10 +47,19 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	@Override
 	public void update() {
 		double test;
+		double test2;
+		double center;
 		synchronized(imgLock){
 			test = this.centerX;
+			test2 = this.centerX2;
 		}
-		SmartDashboard.putNumber("center x", test);
+		if(test > test2){
+			center = test - test2;
+		}
+		else{
+			center = test2 - test;
+		}
+		SmartDashboard.putNumber("center", center);
 	}
 
 	@Override
