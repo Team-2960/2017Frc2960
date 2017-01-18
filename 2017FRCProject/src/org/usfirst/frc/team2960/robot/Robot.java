@@ -37,6 +37,7 @@ public class Robot extends IterativeRobot {
     public void periodicUpdate(){
     	drivetrain.update();
     	cam.update();
+    		
     }
     public void periodicStart(){
     	cam.start();
