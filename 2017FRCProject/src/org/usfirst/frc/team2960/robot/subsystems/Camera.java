@@ -14,12 +14,17 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
 	
+	private static final double TARGET_HEIGHT = 10;
+	private static final double THETA_Y = 36.305;
+	
 	private VisionThread visionThread;
 	private VisionThread visionThreadBoiler;
 	private double centerX = 0.0;
 	private double centerX2 = 0.0;
 	private double centerY = 0.0;
 	private double centerY2 = 0.0;
+	private double yHeight = 0.0;
+	private double boilerDist = 0.0;
 	private int howManyBoxes = 0;
 	
 	private final Object imgLock = new Object();
@@ -61,8 +66,15 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 			
 			
 				synchronized (imgLock2){
-					centerY = r.x + (r.width / 2);
-					centerY2 = r2.y + (r2.height / 2);
+					if(r.height > r2.height){
+						centerY = r.y;
+						centerY2 = r2.y + r2.height;
+					}
+					else{
+						centerY2 = r.y + r.height;
+						centerY = r2.y;
+					}
+					
 				}
 			}
 		});
@@ -107,6 +119,13 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		SmartDashboard.putNumber("height", height);
 		SmartDashboard.putNumber("TestY2", testY2);
 		SmartDashboard.putNumber("testY", testY);
+		
+
+		yHeight = testY2 - testY;
+		SmartDashboard.putNumber("yHeight", yHeight);
+		
+		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeight * Math.tan(Math.toRadians(THETA_Y)));
+		SmartDashboard.putNumber("BoilerDist", boilerDist);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ public class RobotMap {
 	public static int shooter = 6;
 	public static int winch = 7;
 	public static int intake = 8;
-	
+	//solenoids
+	public static int shift = 0;
 	public static int photoeye = 0;
 }

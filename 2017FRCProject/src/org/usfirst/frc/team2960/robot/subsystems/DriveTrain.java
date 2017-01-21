@@ -6,6 +6,7 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,6 +18,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	CANTalon lt2;
 	CANTalon lt3;
 	DigitalInput photoeye;
+	Solenoid shiftSol;
 	
 	public DriveTrain(){
 		rt1 = new CANTalon(RobotMap.rt1);
@@ -25,6 +27,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1 = new CANTalon(RobotMap.lt1);
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
+		shiftSol = new Solenoid(RobotMap.shift);
 		photoeye = new DigitalInput(RobotMap.photoeye);
 		
 	}
@@ -35,6 +38,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1.set(-left);
 		lt2.set(-left);
 		lt3.set(-left);
+	}
+	public void shift(){
+		if(shiftSol.get()){
+			shiftSol.set(false);
+		}
+		else{
+			shiftSol.set(true);
+		}
 	}
 	@Override
 	public void update() {

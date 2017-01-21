@@ -4,6 +4,7 @@ package org.usfirst.frc.team2960.robot;
 import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -17,11 +18,14 @@ public class Robot extends IterativeRobot {
 	Joystick stick;
 	DriveTrain drivetrain;
 	Camera cam;
+	DigitalInput sensor;
+	
     public void robotInit() {
       oi = new OI();
       stick = new Joystick(0);
       drivetrain = new DriveTrain();
       cam = new Camera();
+      sensor = new DigitalInput(1);
     }
     
     public void disabledInit(){
@@ -59,6 +63,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain);
         periodicUpdate();
+        SmartDashboard.putBoolean("Sensor", sensor.get());
     }
     
     /**
