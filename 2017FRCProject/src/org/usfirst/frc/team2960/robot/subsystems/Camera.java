@@ -23,9 +23,12 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private double centerX2 = 0.0;
 	private double centerY = 0.0;
 	private double centerY2 = 0.0;
-	private double yHeight = 0.0;
+	private double yHeightTotal = 0.0;
 	private double boilerDist = 0.0;
 	private int howManyBoxes = 0;
+	private int frontAngleOfCamera = 55;
+	private int backAngleOfCamera = 10;
+	
 	
 	private final Object imgLock = new Object();
 	private final Object imgLock2 = new Object();
@@ -85,8 +88,8 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	public void update() {
 		double testX;
 		double testX2;
-		double testY;
-		double testY2;
+		double yHeight1;
+		double yHeight2;
 		double center;
 		double height;
 		int amount;
@@ -96,35 +99,24 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 			testX2 = this.centerX2;
 		}
 		synchronized(imgLock2){
-			testY = this.centerY;
-			testY2 = this.centerY2;
+			yHeight1 = this.centerY;
+			yHeight2 = this.centerY2;
 		}
-		if(testX > testX2){
-			center = (testX - testX2) + testX;
-		}
-		else{
-			center = (testX2 - testX) + testX2;
-		}
-		if(testY > testY2){
-			height = (testY - testY2) + testY;
-		}
-		else{
-			height = (testY2 - testY) + testY2;
-		}
+	
 		
-		SmartDashboard.putNumber("testX", testX);
+		//SmartDashboard.putNumber("testX", testX);
 		SmartDashboard.putNumber("how many boxes", amount);
-		SmartDashboard.putNumber("TestX2", testX2);
-		SmartDashboard.putNumber("center", center);
-		SmartDashboard.putNumber("height", height);
-		SmartDashboard.putNumber("TestY2", testY2);
-		SmartDashboard.putNumber("testY", testY);
+		//SmartDashboard.putNumber("TestX2", testX2);
+		//SmartDashboard.putNumber("center", center);
+		//SmartDashboard.putNumber("height", height);
+		//SmartDashboard.putNumber("TestY2", testY2);
+		//SmartDashboard.putNumber("testY", testY);
 		
 
-		yHeight = testY2 - testY;
-		SmartDashboard.putNumber("yHeight", yHeight);
+		yHeightTotal = yHeight2 - yHeight1;
+		SmartDashboard.putNumber("yHeight", yHeightTotal);
 		
-		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeight * Math.tan(Math.toRadians(THETA_Y)));
+		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
 		SmartDashboard.putNumber("BoilerDist", boilerDist);
 	}
 
