@@ -5,9 +5,14 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem implements PeriodicUpdate  {
@@ -18,7 +23,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	CANTalon lt2;
 	CANTalon lt3;
 	DigitalInput photoeye;
-	Solenoid shiftSol;
+	DoubleSolenoid shiftSol;
+	AnalogGyro gyro;
+	PIDController turning;
+	public int setPoint;
+	TurnControl turn;
 	
 	public DriveTrain(){
 		rt1 = new CANTalon(RobotMap.rt1);
@@ -27,26 +36,37 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1 = new CANTalon(RobotMap.lt1);
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
-		shiftSol = new Solenoid(RobotMap.shift);
+		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		photoeye = new DigitalInput(RobotMap.photoeye);
-		
+		gyro = new AnalogGyro(RobotMap.Gyro);
+		turn = new TurnControl(this);
+		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
 	}
 	public void setSpeed(double right, double left){
 		rt1.set(right);
-		rt2.set(right);
+		rt2.set(-right);
 		rt3.set(right);
-		lt1.set(-left);
+		lt1.set(left);
 		lt2.set(-left);
 		lt3.set(-left);
 	}
-	public void shift(){
-		if(shiftSol.get()){
-			shiftSol.set(false);
-		}
-		else{
-			shiftSol.set(true);
-		}
+	public void shift(boolean val){
+		if(!val)
+			shiftSol.set(Value.kReverse);
+		else
+			shiftSol.set(Value.kForward);
+		
 	}
+	
+	  
+
+	  public double getGyro(){
+	    return gyro.getRate();
+	  }
+
+	  public void resetGyro(){
+	    gyro.reset();
+	  }
 	@Override
 	public void update() {
 		SmartDashboard.putBoolean("photoeye", photoeye.get());

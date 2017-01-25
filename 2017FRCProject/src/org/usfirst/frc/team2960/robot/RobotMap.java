@@ -12,5 +12,13 @@ public class RobotMap {
 	public static int intake = 8;
 	//solenoids
 	public static int shift = 0;
+	public static int shift2 = 1;
 	public static int photoeye = 0;
+	
+	//pid
+	public static double p1 = 4.5;
+	public static double i1 = .005;
+	public static double d1 = .005;
+	//analog
+	public static int Gyro = 0;
 }

@@ -10,7 +10,10 @@ public class OI {
 	public void driveRobot(Joystick stick,  DriveTrain drive){
 		drive.setSpeed(-stick.getRawAxis(5), -stick.getRawAxis(1));
 		if(stick.getRawButton(1)){
-			drive.shift();
+			drive.shift(true);
+		}
+		if(stick.getRawButton(2)){
+			drive.shift(false);
 		}
 	}
 	
