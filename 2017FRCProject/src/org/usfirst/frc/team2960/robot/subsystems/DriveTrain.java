@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -41,14 +42,16 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		gyro = new AnalogGyro(RobotMap.Gyro);
 		turn = new TurnControl(this);
 		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
+		setPoint = 60;
+		gyro.calibrate();
 	}
 	public void setSpeed(double right, double left){
-		rt1.set(right);
-		rt2.set(-right);
-		rt3.set(right);
-		lt1.set(left);
+		rt1.set(right); 
+		rt2.set(right); // neg for real robot
+		//rt3.set(right);
+		lt1.set(-left);// no neg for real robot
 		lt2.set(-left);
-		lt3.set(-left);
+		//lt3.set(-left);
 	}
 	public void shift(boolean val){
 		if(!val)
@@ -58,8 +61,17 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 	}
 	
+	  public void startPID(){
+		  gyro.setPIDSourceType(PIDSourceType.kRate);
+		  turning.setSetpoint(setPoint);
+		  turning.enable();
+	  }
 	  
-
+	  public void stopPID(){
+		  if(turning.isEnabled()){
+			  turning.disable();
+		  }
+	  }
 	  public double getGyro(){
 	    return gyro.getRate();
 	  }
@@ -70,12 +82,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	@Override
 	public void update() {
 		SmartDashboard.putBoolean("photoeye", photoeye.get());
-		
+		SmartDashboard.putNumber("Gyro Rate", getGyro());
+		SmartDashboard.putNumber("LMotor value", lt1.get());
+		SmartDashboard.putNumber("RMotor value", rt1.get());
 	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
+		this.resetGyro();
 		
 	}
 
