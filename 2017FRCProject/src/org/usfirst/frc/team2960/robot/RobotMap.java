@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2960.robot;
 
 public class RobotMap {
+	//motors
 	public static int rt1 = 0;
 	public static int rt2 = 1;
 	
@@ -16,8 +17,7 @@ public class RobotMap {
 	//solenoids
 	public static int shift = 0;
 	public static int shift2 = 1;
-	public static int photoeye = 0;
-	
+	public static int photoeye = 0;	
 	//pid
 	public static double p1 = .0002;
 	public static double i1 = 0.0001;
