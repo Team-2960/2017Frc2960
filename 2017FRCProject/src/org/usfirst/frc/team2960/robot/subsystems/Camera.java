@@ -20,6 +20,9 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private VisionThread visionThread;
 	private VisionThread visionThreadBoiler;
 	private double centerX = 0.0;
+	private double X = 0.0;
+	private double xWidth = 0.0;
+	private double pixelsFromEdge = 0.0;
 	private double centerX2 = 0.0;
 	private double centerY = 0.0;
 	private double centerY2 = 0.0;
@@ -50,6 +53,8 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 				Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
 				
 				synchronized (imgLock){
+					X = r.x;
+					xWidth = r.width;
 					centerX = r.x + (r.width / 2);
 					howManyBoxes = pipeline.filterContoursOutput().size();
 					centerX2 = r2.x + (r2.width / 2);
@@ -92,8 +97,12 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		double yHeight2;
 		double center;
 		double height;
+		double x;
+		double width1;
 		int amount;
 		synchronized(imgLock){
+			x = this.X;
+			width1 = this.xWidth;
 			testX = this.centerX;
 			amount = this.howManyBoxes;
 			testX2 = this.centerX2;
@@ -112,14 +121,24 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		//SmartDashboard.putNumber("TestY2", testY2);
 		//SmartDashboard.putNumber("testY", testY);
 		
-
+		
+		pixelsFromEdge = (testX2 + testX) / 2;
+		SmartDashboard.putNumber("pixels From edge", pixelsFromEdge);
+		
 		yHeightTotal = yHeight2 - yHeight1;
 		SmartDashboard.putNumber("yHeight", yHeightTotal);
+		
+		SmartDashboard.putString("IM", "Alive");
 		
 		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
 		SmartDashboard.putNumber("BoilerDist", boilerDist);
 	}
-
+	
+	
+	public double getPixelsFromEdge(){
+		return pixelsFromEdge;
+	}
+	
 	@Override
 	public void start() {
 		

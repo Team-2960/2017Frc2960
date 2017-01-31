@@ -10,8 +10,8 @@ public class RobotMap {
 	public static int lt1 = 2; //should be 3
 	public static int lt2 = 3; // should be 4
 	
-	public static int lt3 = 5;
-	public static int shooter = 6;
+	public static int lt3 = 6; // should be 5
+	public static int shooter = 5;
 	public static int winch = 7;
 	public static int intake = 8;
 	//solenoids

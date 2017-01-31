@@ -4,6 +4,7 @@ import org.usfirst.frc.team2960.robot.PeriodicUpdate;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -27,8 +28,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	DoubleSolenoid shiftSol;
 	AnalogGyro gyro;
 	PIDController turning;
-	public int setPoint;
 	TurnControl turn;
+	Camera cam;
+	double pixelsFromEdge = 0.0;
+	double speedStart;
+	boolean OnOff;
+	double awayFromTarget;
+	 double direction;
 	
 	public DriveTrain(){
 		rt1 = new CANTalon(RobotMap.rt1);
@@ -37,13 +43,17 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1 = new CANTalon(RobotMap.lt1);
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
+		cam = new Camera();
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		photoeye = new DigitalInput(RobotMap.photoeye);
 		gyro = new AnalogGyro(RobotMap.Gyro);
 		turn = new TurnControl(this);
 		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
-		setPoint = 60;
 		gyro.calibrate();
+		speedStart = 60;
+		lt1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		lt1.configEncoderCodesPerRev(360);
+		lt1.setPosition(0);
 	}
 	public void setSpeed(double right, double left){
 		rt1.set(right); 
@@ -63,8 +73,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	
 	  public void startPID(){
 		  gyro.setPIDSourceType(PIDSourceType.kRate);
-		  turning.setSetpoint(setPoint);
 		  turning.enable();
+	  }
+	  
+	  public void setSetpoint(double setpoint){
+		  turning.setSetpoint(setpoint);
 	  }
 	  
 	  public void stopPID(){
@@ -79,8 +92,47 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public void resetGyro(){
 	    gyro.reset();
 	  }
+	  
+	  public void setTurnToTarget(boolean OnOff){
+		  this.OnOff = OnOff;
+	  }
+	  
+	  public void turnToTarget(){
+		  
+		 
+		 if(pixelsFromEdge > 160){
+			 awayFromTarget = pixelsFromEdge - 160;
+			 direction = -1;
+		 }
+		 else{
+			 awayFromTarget = 160 - pixelsFromEdge;
+			 direction = 1;
+		 }
+		 if(awayFromTarget > 150)
+			 setSetpoint(speedStart * direction);
+		 if(awayFromTarget < 150 && awayFromTarget > 100)
+			 setSetpoint((speedStart - 20) * direction);
+		 else if(awayFromTarget < 100 && awayFromTarget > 10)
+			 setSetpoint((speedStart - 40) * direction);
+		 else if(awayFromTarget <= 10)
+			 setSetpoint((speedStart - 60) * direction);
+		 if(!turning.isEnabled())
+			 startPID();
+	  }
 	@Override
 	public void update() {
+		SmartDashboard.putNumber("EncoderPos", lt1.getPosition());
+		SmartDashboard.putNumber("EncoderVel", lt1.getEncVelocity());
+		SmartDashboard.putNumber("awayFromTarget", awayFromTarget);
+		SmartDashboard.putNumber("direction", direction);
+		
+		if(OnOff)
+			turnToTarget();
+		else{
+			if(turning.isEnabled())
+				 stopPID();
+		}
+		pixelsFromEdge = cam.getPixelsFromEdge();
 		SmartDashboard.putBoolean("photoeye", photoeye.get());
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
 		SmartDashboard.putNumber("LMotor value", lt1.get());
