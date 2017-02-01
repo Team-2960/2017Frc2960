@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
 	CANTalon shoot;
-	double speed = 75.0;
+	double speed = .9;
 	boolean canMove = false;
 	
 	
@@ -20,11 +20,11 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	}
 	
 	public void upSpeed(){
-		speed += 5;
+		speed += .1;
 	}
 	
 	public void downSpeed(){
-		speed -= 5;
+		speed -= .1;
 	}
 	
 	public void turnONOFF(boolean onOff){

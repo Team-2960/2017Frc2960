@@ -18,12 +18,14 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem implements PeriodicUpdate  {
+	/*
 	CANTalon rt1;
 	CANTalon rt2;
 	CANTalon rt3;
 	CANTalon lt1;
 	CANTalon lt2;
 	CANTalon lt3;
+	*/
 	DigitalInput photoeye;
 	DoubleSolenoid shiftSol;
 	AnalogGyro gyro;
@@ -37,12 +39,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	 double direction;
 	
 	public DriveTrain(){
+		/*
 		rt1 = new CANTalon(RobotMap.rt1);
 		rt2 = new CANTalon(RobotMap.rt2);
 		rt3 = new CANTalon(RobotMap.rt3);
 		lt1 = new CANTalon(RobotMap.lt1);
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
+		*/
 		cam = new Camera();
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		photoeye = new DigitalInput(RobotMap.photoeye);
@@ -51,17 +55,21 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
 		gyro.calibrate();
 		speedStart = 60;
+		/*
 		lt1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		lt1.configEncoderCodesPerRev(360);
 		lt1.setPosition(0);
+		*/
 	}
 	public void setSpeed(double right, double left){
+		/*
 		rt1.set(right); 
 		rt2.set(right); // neg for real robot
 		//rt3.set(right);
 		lt1.set(-left);// no neg for real robot
 		lt2.set(-left);
 		//lt3.set(-left);
+		 */
 	}
 	public void shift(boolean val){
 		if(!val)
@@ -121,8 +129,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	@Override
 	public void update() {
+		/*
 		SmartDashboard.putNumber("EncoderPos", lt1.getPosition());
 		SmartDashboard.putNumber("EncoderVel", lt1.getEncVelocity());
+		*/
 		SmartDashboard.putNumber("awayFromTarget", awayFromTarget);
 		SmartDashboard.putNumber("direction", direction);
 		
@@ -135,8 +145,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		pixelsFromEdge = cam.getPixelsFromEdge();
 		SmartDashboard.putBoolean("photoeye", photoeye.get());
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
+		/*
 		SmartDashboard.putNumber("LMotor value", lt1.get());
 		SmartDashboard.putNumber("RMotor value", rt1.get());
+		*/
 	}
 
 	@Override
@@ -147,12 +159,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 
 	@Override
 	protected void initDefaultCommand() {
+		/*
 		rt1.set(0);
 		rt2.set(0);
 		rt3.set(0);
 		lt1.set(0);
 		lt2.set(0);
 		lt3.set(0);
+		*/
 		
 	}
 
