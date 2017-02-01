@@ -18,9 +18,11 @@ public class RobotMap {
 	public static int shooter = 0;
 	public static int winch = 7;
 	public static int intake = 8;
+	public static int agitator = 9;
 	//solenoids
 	public static int shift = 0;
 	public static int shift2 = 1;
+	public static int gearPusher = 2;
 	public static int photoeye = 0;	
 	//pid
 	public static double p1 = .0002;

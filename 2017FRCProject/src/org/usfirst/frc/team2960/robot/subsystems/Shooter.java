@@ -5,18 +5,20 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
-	CANTalon shoot;
+	VictorSP shoot;
 	double speed = .9;
 	boolean canMove = false;
 	
 	
 	public Shooter(){
-		shoot = new CANTalon(RobotMap.shooter);
+		//shoot = new CANTalon(RobotMap.shooter);
+		shoot = new VictorSP(RobotMap.shooter);
 	}
 	
 	public void upSpeed(){
