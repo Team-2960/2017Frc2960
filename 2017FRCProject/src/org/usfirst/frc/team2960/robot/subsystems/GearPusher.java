@@ -11,7 +11,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	Solenoid GearPusher;
 	
 	
-	GearPusher(){
+	public GearPusher(){
 		GearPusher = new Solenoid(RobotMap.gearPusher);
 	}
 	

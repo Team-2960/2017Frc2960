@@ -2,8 +2,11 @@
 package org.usfirst.frc.team2960.robot;
 
 import org.ietf.jgss.Oid;
+import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
+import org.usfirst.frc.team2960.robot.subsystems.Intake;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -22,6 +25,9 @@ public class Robot extends IterativeRobot {
 	Camera cam;
 	DigitalInput sensor;
 	Shooter shoot;
+	Intake intake;
+	Agitator agi;
+	GearPusher push;
 	
     public void robotInit() {
       oi = new OI();
@@ -30,6 +36,9 @@ public class Robot extends IterativeRobot {
       cam = new Camera();
       sensor = new DigitalInput(1);
       shoot = new Shooter();
+      intake = new Intake();
+      agi = new Agitator();
+      push = new GearPusher();
     }
     
     public void disabledInit(){
@@ -66,7 +75,7 @@ public class Robot extends IterativeRobot {
     	periodicStart();
     }
     public void teleopPeriodic() {
-    	oi.driveRobot(stick, drivetrain, shoot);
+    	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push);
         periodicUpdate();
         SmartDashboard.putBoolean("Sensor", sensor.get());
     }
