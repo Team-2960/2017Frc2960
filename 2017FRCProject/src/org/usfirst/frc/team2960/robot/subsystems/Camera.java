@@ -46,7 +46,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private final Object imgLock2 = new Object();
 	
 	private UsbCamera camera;
-	public Camera(int cameraPort, String name){   
+	public Camera(int cameraPort){   
 		//camera = new UsbCamera(name, "/dev/video0");
 		camera = CameraServer.getInstance().startAutomaticCapture(cameraPort);
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -116,16 +116,6 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 			yHeight1 = this.centerY;
 			yHeight2 = this.centerY2;
 		}
-	
-		
-		//SmartDashboard.putNumber("testX", testX);
-		//SmartDashboard.putNumber("how many boxes", amount);
-		//SmartDashboard.putNumber("TestX2", testX2);
-		//SmartDashboard.putNumber("center", center);
-		//SmartDashboard.putNumber("height", height);
-		//SmartDashboard.putNumber("TestY2", testY2);
-		//SmartDashboard.putNumber("testY", testY);
-		
 		
 		pixelsFromEdge = (testX2 + testX) / 2;
 		

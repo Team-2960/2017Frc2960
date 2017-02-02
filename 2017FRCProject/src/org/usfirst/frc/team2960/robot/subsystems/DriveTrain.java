@@ -48,8 +48,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
 		*/
-		cam = new Camera(0, "one");
-		cam2 = new Camera(1, "two");
+		cam = new Camera(0);
+		cam2 = new Camera(1);
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		photoeye = new DigitalInput(RobotMap.photoeye);
 		gyro = new AnalogGyro(RobotMap.Gyro);
