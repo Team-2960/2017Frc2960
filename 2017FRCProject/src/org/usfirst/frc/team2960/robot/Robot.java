@@ -22,7 +22,6 @@ public class Robot extends IterativeRobot {
 	
 	Joystick stick;
 	DriveTrain drivetrain;
-	Camera cam;
 	DigitalInput sensor;
 	Shooter shoot;
 	Intake intake;
@@ -33,7 +32,7 @@ public class Robot extends IterativeRobot {
       oi = new OI();
       stick = new Joystick(0);
       drivetrain = new DriveTrain();
-      cam = new Camera();
+      
       sensor = new DigitalInput(1);
       shoot = new Shooter();
       intake = new Intake();
@@ -54,10 +53,10 @@ public class Robot extends IterativeRobot {
     public void periodicUpdate(){
     	shoot.update();
     	drivetrain.update();
-    	cam.update();
+    	
     }
     public void periodicStart(){
-    	cam.start();
+  
     	shoot.start();
     	drivetrain.start();
     }

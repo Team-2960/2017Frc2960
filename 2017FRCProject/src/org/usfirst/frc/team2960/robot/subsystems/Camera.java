@@ -31,14 +31,24 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private int howManyBoxes = 0;
 	private int frontAngleOfCamera = 55;
 	private int backAngleOfCamera = 10;
+	double testX;
+	double testX2;
+	double yHeight1;
+	double yHeight2;
+	double center;
+	double height;
+	double x;
+	double width1;
+	int amount;
 	
 	
 	private final Object imgLock = new Object();
 	private final Object imgLock2 = new Object();
 	
 	private UsbCamera camera;
-	public Camera(){   
-		camera = CameraServer.getInstance().startAutomaticCapture();
+	public Camera(int cameraPort, String name){   
+		//camera = new UsbCamera(name, "/dev/video0");
+		camera = CameraServer.getInstance().startAutomaticCapture(cameraPort);
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 		camera.setBrightness(0);
 		startThread();
@@ -91,15 +101,10 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	
 	@Override
 	public void update() {
-		double testX;
-		double testX2;
-		double yHeight1;
-		double yHeight2;
-		double center;
-		double height;
-		double x;
-		double width1;
-		int amount;
+		
+		//SmartDashboard.putString("camrea path", camera.getPath());
+		
+	
 		synchronized(imgLock){
 			x = this.X;
 			width1 = this.xWidth;
@@ -114,7 +119,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	
 		
 		//SmartDashboard.putNumber("testX", testX);
-		SmartDashboard.putNumber("how many boxes", amount);
+		//SmartDashboard.putNumber("how many boxes", amount);
 		//SmartDashboard.putNumber("TestX2", testX2);
 		//SmartDashboard.putNumber("center", center);
 		//SmartDashboard.putNumber("height", height);
@@ -123,18 +128,24 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		
 		
 		pixelsFromEdge = (testX2 + testX) / 2;
-		SmartDashboard.putNumber("pixels From edge", pixelsFromEdge);
 		
 		yHeightTotal = yHeight2 - yHeight1;
-		SmartDashboard.putNumber("yHeight", yHeightTotal);
-		
-		SmartDashboard.putString("IM", "Alive");
-		
+	
 		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
-		SmartDashboard.putNumber("BoilerDist", boilerDist);
 	}
 	
-	
+	public double GetPixelsFromEdge(){
+		return pixelsFromEdge;
+	}
+	public double getBoilerDist(){
+		return boilerDist;
+	}
+	public int getHowManyBoxes(){
+		return amount;
+	}
+	public double getYheightTotal(){
+		return yHeightTotal;
+	}
 	public double getPixelsFromEdge(){
 		return pixelsFromEdge;
 	}

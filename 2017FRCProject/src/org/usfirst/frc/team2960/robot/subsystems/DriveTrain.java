@@ -32,6 +32,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	PIDController turning;
 	TurnControl turn;
 	Camera cam;
+	Camera cam2;
 	double pixelsFromEdge = 0.0;
 	double speedStart;
 	boolean OnOff;
@@ -47,7 +48,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
 		*/
-		cam = new Camera();
+		cam = new Camera(0, "one");
+		cam2 = new Camera(1, "two");
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		photoeye = new DigitalInput(RobotMap.photoeye);
 		gyro = new AnalogGyro(RobotMap.Gyro);
@@ -129,12 +131,20 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	@Override
 	public void update() {
+		cam2.update();
+		cam.update();
 		/*
 		SmartDashboard.putNumber("EncoderPos", lt1.getPosition());
 		SmartDashboard.putNumber("EncoderVel", lt1.getEncVelocity());
 		*/
+		/*
 		SmartDashboard.putNumber("awayFromTarget", awayFromTarget);
 		SmartDashboard.putNumber("direction", direction);
+		*/
+		
+		SmartDashboard.putNumber("cam 0 box number", cam.amount);
+		SmartDashboard.putNumber("cam 2 box number", cam2.amount);
+		
 		
 		if(OnOff)
 			turnToTarget();
@@ -143,7 +153,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 stopPID();
 		}
 		pixelsFromEdge = cam.getPixelsFromEdge();
-		SmartDashboard.putBoolean("photoeye", photoeye.get());
+		//SmartDashboard.putBoolean("photoeye", photoeye.get());
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
 		/*
 		SmartDashboard.putNumber("LMotor value", lt1.get());

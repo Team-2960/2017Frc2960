@@ -16,33 +16,15 @@ public class OI{
 			drive.setSpeed(-stick.getRawAxis(5), -stick.getRawAxis(1));
 		}
 		if(stick.getRawButton(1)){
-			//drive.shift(true);
 			shoot.turnONOFF(true);
 		}
 		if(stick.getRawButton(2)){
-			//drive.shift(false);
 			shoot.turnONOFF(false);
-		}
-		
-		if(stick.getRawButton(3)){
-			shoot.upSpeed();
-			//drive.startPID();
-			//isTurning = true;
-		}
-		if(stick.getRawButton(4)){
-			shoot.downSpeed();
-			//drive.stopPID();
-			//isTurning = false;
 		}
 		if(stick.getRawButton(5)){
 			drive.setTurnToTarget(true);
 			isTurning = true;
 		}
-		if(stick.getRawButton(6)){
-			drive.setTurnToTarget(false);
-			isTurning = false;
-		}
-		
 	}
 	
 	public void operateRobot(Joystick stick ){
