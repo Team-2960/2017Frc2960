@@ -12,6 +12,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,23 +22,26 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	Joystick stick;
+	Joystick operator;
 	DriveTrain drivetrain;
 	DigitalInput sensor;
 	Shooter shoot;
 	Intake intake;
 	Agitator agi;
 	GearPusher push;
+	PowerDistributionPanel pdp;
 	
     public void robotInit() {
       oi = new OI();
       stick = new Joystick(0);
+      operator = new Joystick(1);
       drivetrain = new DriveTrain();
-      
       sensor = new DigitalInput(1);
       shoot = new Shooter();
       intake = new Intake();
       agi = new Agitator();
       push = new GearPusher();
+      pdp = new PowerDistributionPanel();
     }
     
     public void disabledInit(){
@@ -75,8 +79,9 @@ public class Robot extends IterativeRobot {
     }
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push);
+    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push);
         periodicUpdate();
-        SmartDashboard.putBoolean("Sensor", sensor.get());
+        SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
     
     /**

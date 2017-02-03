@@ -26,7 +26,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	}
 	public void runShooter(){
 		if(canMove)
-			shoot.set(-speed);
+			shoot.set(speed);
 		else
 			shoot.set(0);
 	}
