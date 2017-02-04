@@ -135,6 +135,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("cam 2 box number", cam2.amount);
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
 		
+		SmartDashboard.putNumber("Encoder 1", rt1.get());
+		SmartDashboard.putNumber("Encoder 2", rt2.get());
+		
+		
+		
 		if(OnOff)
 			turnToTarget();
 		else{
