@@ -64,7 +64,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public void setSpeed(double right, double left){
 		rt1.set(right); 
 		rt2.set(-right);
-		rt3.set(right);
+		rt3.set(-right);
 		lt1.set(left);
 		lt2.set(-left);
 		lt3.set(-left);

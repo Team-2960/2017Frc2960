@@ -3,29 +3,31 @@ package org.usfirst.frc.team2960.robot.subsystems;
 import org.usfirst.frc.team2960.robot.PeriodicUpdate;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.VictorSP;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Intake extends Subsystem implements PeriodicUpdate {
+public class Winch extends Subsystem implements PeriodicUpdate{
 
-	VictorSP intake;
+	CANTalon winch;
 	double speed;
 	
-	public Intake(){
-		intake = new VictorSP(RobotMap.intake);
-		speed = .5;
+	
+	public Winch(){
+		winch = new CANTalon(RobotMap.winch);
+		speed = 1;
 	}
 	
-	public void startIntake(){
-		intake.set(speed);
+	public void WinchUP(){
+		winch.set(speed);
 	}
 	
-	public void startIntakeReversed(){
-		intake.set(-speed);
+	public void WinchDown(){
+		winch.set(-speed);
 	}
 	
-	public void stopIntake(){
-		intake.set(0);
+	public void WinchStop(){
+		winch.set(0);
 	}
 	
 	@Override

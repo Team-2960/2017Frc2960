@@ -8,6 +8,7 @@ import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
+import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
 	Agitator agi;
 	GearPusher push;
 	PowerDistributionPanel pdp;
+	Winch winch;
 	
     public void robotInit() {
       oi = new OI();
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
       agi = new Agitator();
       push = new GearPusher();
       pdp = new PowerDistributionPanel();
+      winch = new Winch();
     }
     
     public void disabledInit(){
@@ -78,8 +81,8 @@ public class Robot extends IterativeRobot {
     	periodicStart();
     }
     public void teleopPeriodic() {
-    	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push);
-    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push);
+    	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
+    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
         periodicUpdate();
         SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
