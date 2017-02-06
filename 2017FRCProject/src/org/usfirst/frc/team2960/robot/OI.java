@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI{
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
-		drive.setSpeed(stick.getRawAxis(5), -stick.getRawAxis(1));
+		drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))

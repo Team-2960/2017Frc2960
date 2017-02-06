@@ -13,15 +13,15 @@ public class Intake extends Subsystem implements PeriodicUpdate {
 	
 	public Intake(){
 		intake = new VictorSP(RobotMap.intake);
-		speed = .5;
+		speed = 1;
 	}
 	
 	public void startIntake(){
-		intake.set(speed);
+		intake.set(-speed);
 	}
 	
 	public void startIntakeReversed(){
-		intake.set(-speed);
+		intake.set(speed);
 	}
 	
 	public void stopIntake(){
