@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
-	VictorSP shoot;
+	CANTalon shoot;
 	double speed = .85;
 	boolean canMove = false;
 	
 	
 	public Shooter(){
 		//shoot = new CANTalon(RobotMap.shooter);
-		shoot = new VictorSP(RobotMap.shooter);
+		shoot = new CANTalon(RobotMap.shooter);
 	}
 	
 	public void turnONOFF(boolean onOff){

@@ -11,18 +11,16 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class OI{
 	
+	Boolean flap = false;
+	Boolean toggle = true;
+	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
 		drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
 			drive.shift(false);
-		if(stick.getRawButton(1))
-			winch.WinchUP();
-		else if(stick.getRawButton(2))
-			winch.WinchDown();
-		else
-			winch.WinchStop();
+		
 	}
 	
 	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
@@ -30,7 +28,6 @@ public class OI{
 			push.turnOn();
 		else
 			push.turnOff();
-		
 		if(stick.getRawButton(6))
 			agi.startAgitator();
 		if(stick.getRawButton(5))
@@ -38,15 +35,35 @@ public class OI{
 		
 		if(stick.getRawButton(1))
 			shoot.turnONOFF(true);
-		if(stick.getRawButton(3))
+		else
 			shoot.turnONOFF(false);
 		
 		if(stick.getRawButton(8))
 			intake.startIntake();
 		else if(stick.getRawButton(7))
-			intake.startIntakeReversed();
+					intake.startIntakeReversed();
 		else 
 			intake.stopIntake();
+		if(stick.getRawButton(10))
+			winch.WinchUP();
+		else if(stick.getRawButton(3))
+			winch.WinchDown();
+		else
+			winch.WinchStop();
+		if(toggle && stick.getRawButton(4)){
+			toggle = false;
+			if(flap){
+				push.flapOn();
+				flap = false;
+			}
+			else{
+				push.flapOff();
+				flap = true;
+			}
+		}
+		else if (!stick.getRawButton(4)){
+			toggle = false;
+		}
 		
 	}
 	

@@ -5,6 +5,7 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -134,9 +135,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("cam 0 box number", cam.amount);
 		SmartDashboard.putNumber("cam 2 box number", cam2.amount);
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
-		
-		SmartDashboard.putNumber("Encoder 1", rt1.get());
-		SmartDashboard.putNumber("Encoder 2", rt2.get());
+		SmartDashboard.putNumber("Encoder 1", rt1.getEncVelocity());
+		SmartDashboard.putNumber("Encoder 2", lt1.getEncVelocity());
 		
 		
 		

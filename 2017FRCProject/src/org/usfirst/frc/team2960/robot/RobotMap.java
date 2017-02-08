@@ -17,6 +17,8 @@ public class RobotMap {
 	public static int shift2 = 1;
 	public static int gearPusher = 2;
 	public static int gearPusher2 =  3;
+	public static int flap = 4;
+	public static int flap2 = 5;
 	public static int photoeye = 0;	
 	//pid
 	public static double p1 = .0002;
