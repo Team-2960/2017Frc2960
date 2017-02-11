@@ -30,9 +30,10 @@ public class OI{
 			push.turnOff();
 		if(stick.getRawButton(6))
 			agi.startAgitator();
-		if(stick.getRawButton(5))
+		else if(stick.getRawButton(5))
+			agi.startAgitatorReversed();
+		else
 			agi.stopAgitator();
-		
 		if(stick.getRawButton(1))
 			shoot.turnONOFF(true);
 		else
@@ -41,7 +42,7 @@ public class OI{
 		if(stick.getRawButton(8))
 			intake.startIntake();
 		else if(stick.getRawButton(7))
-					intake.startIntakeReversed();
+			intake.startIntakeReversed();
 		else 
 			intake.stopIntake();
 		if(stick.getRawButton(10))
@@ -50,20 +51,12 @@ public class OI{
 			winch.WinchDown();
 		else
 			winch.WinchStop();
-		if(toggle && stick.getRawButton(4)){
-			toggle = false;
-			if(flap){
-				push.flapOn();
-				flap = false;
-			}
-			else{
-				push.flapOff();
-				flap = true;
-			}
-		}
-		else if (!stick.getRawButton(4)){
-			toggle = false;
-		}
+		if(stick.getRawButton(4))
+			push.flapOn();
+		else 
+			push.flapOff();
+		
+		
 		
 	}
 	

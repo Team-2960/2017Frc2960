@@ -29,7 +29,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		Flap.set(Value.kForward);
 	}
 	public void flapOff(){
-		Flap.set(Value.kOff);
+		Flap.set(Value.kReverse);
 	}
 	
 	@Override

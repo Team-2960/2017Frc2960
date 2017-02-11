@@ -5,6 +5,7 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,13 +13,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
 	CANTalon shoot;
-	double speed = .85;
+	double speed = .90;
 	boolean canMove = false;
+	DigitalInput photoeye;
 	
 	
 	public Shooter(){
 		//shoot = new CANTalon(RobotMap.shooter);
 		shoot = new CANTalon(RobotMap.shooter);
+		photoeye = new DigitalInput(RobotMap.photoeyeShooter);
 	}
 	
 	public void turnONOFF(boolean onOff){
@@ -36,7 +39,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	public void update() {
 		runShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
-		
+		SmartDashboard.putBoolean("Photoeye value", photoeye.get());
 	}
 
 	@Override

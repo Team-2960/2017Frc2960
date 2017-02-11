@@ -27,7 +27,6 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	CANTalon lt2;
 	CANTalon lt3;
 	
-	DigitalInput photoeye;
 	DoubleSolenoid shiftSol;
 	AnalogGyro gyro;
 	PIDController turning;
@@ -54,7 +53,6 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		//solenoids
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		//sensors
-		photoeye = new DigitalInput(RobotMap.photoeye);
 		gyro = new AnalogGyro(RobotMap.Gyro);
 		//PID
 		turn = new TurnControl(this);
@@ -135,7 +133,9 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("cam 0 box number", cam.amount);
 		SmartDashboard.putNumber("cam 2 box number", cam2.amount);
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
-		SmartDashboard.putNumber("Encoder 1", rt1.getEncVelocity());
+		
+		SmartDashboard.putNumber("Encoder 1 Velocity", rt1.getEncVelocity());
+		SmartDashboard.putNumber("Encoder 1", rt1.getPosition());
 		SmartDashboard.putNumber("Encoder 2", lt1.getEncVelocity());
 		
 		
@@ -154,7 +154,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	@Override
 	public void start() {
 		this.resetGyro();
-		
+		rt1.setPosition(0);
 	}
 
 	@Override

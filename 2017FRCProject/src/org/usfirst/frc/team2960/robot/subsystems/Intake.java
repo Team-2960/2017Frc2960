@@ -3,16 +3,18 @@ package org.usfirst.frc.team2960.robot.subsystems;
 import org.usfirst.frc.team2960.robot.PeriodicUpdate;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem implements PeriodicUpdate {
 
-	VictorSP intake;
+	CANTalon intake;
 	double speed;
 	
 	public Intake(){
-		intake = new VictorSP(RobotMap.intake);
+		intake = new CANTalon(RobotMap.intake);
 		speed = 1;
 	}
 	
