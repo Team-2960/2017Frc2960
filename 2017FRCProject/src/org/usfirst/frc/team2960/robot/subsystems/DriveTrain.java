@@ -58,7 +58,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		turn = new TurnControl(this);
 		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
 		gyro.calibrate();
-		speedStart = 60;
+		speedStart = 40;
 	}
 	public void setSpeed(double right, double left){
 		rt1.set(right); 
@@ -106,24 +106,24 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public void turnToTarget(){
 		  
 		 
-		 if(pixelsFromEdge > 160){
-			 awayFromTarget = pixelsFromEdge - 160;
-			 direction = -1;
-		 }
-		 else{
-			 awayFromTarget = 160 - pixelsFromEdge;
-			 direction = 1;
-		 }
-		 if(awayFromTarget > 150)
-			 setSetpoint(speedStart * direction);
-		 if(awayFromTarget < 150 && awayFromTarget > 100)
-			 setSetpoint((speedStart - 20) * direction);
-		 else if(awayFromTarget < 100 && awayFromTarget > 10)
-			 setSetpoint((speedStart - 40) * direction);
-		 else if(awayFromTarget <= 10)
-			 setSetpoint((speedStart - 60) * direction);
-		 if(!turning.isEnabled())
-			 startPID();
+		  if(pixelsFromEdge > 160){
+				 awayFromTarget = pixelsFromEdge - 160;
+				 direction = 1;
+			 }
+			else{
+				 awayFromTarget = 160 - pixelsFromEdge;
+				 direction = -1;
+			 }
+			 if(awayFromTarget > 150)
+				 setSetpoint(speedStart * direction);
+			 else if(awayFromTarget < 150 && awayFromTarget > 100)
+				 setSetpoint((speedStart - 10) * direction);
+			 else if(awayFromTarget < 100 && awayFromTarget > 10)
+				 setSetpoint((speedStart - 20) * direction);
+			 else if(awayFromTarget <= 10)
+				 setSetpoint(0);
+			 if(!turning.isEnabled())
+				 startPID();
 	  }
 	@Override
 	public void update() {
@@ -136,7 +136,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 		SmartDashboard.putNumber("Encoder 1 Velocity", rt1.getEncVelocity());
 		SmartDashboard.putNumber("Encoder 1", rt1.getPosition());
-		SmartDashboard.putNumber("Encoder 2", lt1.getEncVelocity());
+		SmartDashboard.putNumber("Encoder 2", lt1.getPosition());
+		SmartDashboard.putNumber("Encoder 2 Velocity", lt1.getEncVelocity());
+		
+		
 		
 		
 		
@@ -147,7 +150,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 stopPID();
 		}
 		
-		pixelsFromEdge = cam.getPixelsFromEdge();
+		pixelsFromEdge = cam2.getPixelsFromEdge();
+		SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
 	}
 
@@ -155,6 +159,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public void start() {
 		this.resetGyro();
 		rt1.setPosition(0);
+		lt1.setPosition(0);	
 	}
 
 	@Override

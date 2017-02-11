@@ -15,12 +15,20 @@ public class OI{
 	Boolean toggle = true;
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
-		drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
+		//drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
 			drive.shift(false);
-		
+		if(stick.getRawButton(1))
+			push.ringLightOn();
+		if(stick.getRawButton(2))
+			push.ringLightOff();
+		if(stick.getRawButton(3))
+			drive.setTurnToTarget(true);
+		if(stick.getRawButton(4))
+			drive.setTurnToTarget(false);
+	
 	}
 	
 	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
@@ -36,9 +44,12 @@ public class OI{
 			agi.stopAgitator();
 		if(stick.getRawButton(1))
 			shoot.turnONOFF(true);
+			//shoot.startPID();
+			
 		else
 			shoot.turnONOFF(false);
-		
+			//shoot.stopPID();
+			
 		if(stick.getRawButton(8))
 			intake.startIntake();
 		else if(stick.getRawButton(7))
