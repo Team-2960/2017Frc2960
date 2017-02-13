@@ -13,7 +13,10 @@ public class TurnControl implements PIDOutput{
 	
 	@Override
 	public void pidWrite(double output) {
-		drive.setSpeed(-output, -output);
+		if(drive.isPidGo())
+			drive.setSpeed(-output, -output);
+	
+			
 	}
 
 }

@@ -85,6 +85,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  turning.enable();
 	  }
 	  
+	  public void addTurn(double right, double left){
+		  setSpeed(right + pidOIRight, left + pidOILeft);
+	  }
+	  
+	  
 	  public void setSetpoint(double setpoint){
 		  turning.setSetpoint(setpoint);
 	  }
