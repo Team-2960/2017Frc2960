@@ -37,7 +37,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	double speedStart;
 	boolean OnOff;
 	double awayFromTarget;
-	 double direction;
+	double direction;
+	private boolean pidGo;
+	double pidOIRight = 0;
+	double pidOILeft = 0;
 	
 	public DriveTrain(){
 		//Talons
@@ -155,13 +158,26 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 	}
 
+	
+	public void runPidOI(double right, double left){
+		pidOIRight = right;
+		pidOILeft = left;
+	}
+	
+	
 	@Override
 	public void start() {
 		this.resetGyro();
 		rt1.setPosition(0);
 		lt1.setPosition(0);	
 	}
-
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	protected void initDefaultCommand() {
 		rt1.set(0);
@@ -170,6 +186,12 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1.set(0);
 		lt2.set(0);
 		lt3.set(0);
+	}
+	public boolean isPidGo() {
+		return pidGo;
+	}
+	public void setPidGo(boolean pidGo) {
+		this.pidGo = pidGo;
 	}
 
 }

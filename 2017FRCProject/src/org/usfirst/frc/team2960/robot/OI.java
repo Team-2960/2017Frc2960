@@ -15,7 +15,13 @@ public class OI{
 	Boolean toggle = true;
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
-		drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
+		
+		if(!drive.isPidGo()){
+			drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
+		}
+		else{
+			
+		}
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
