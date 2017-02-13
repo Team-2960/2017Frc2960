@@ -149,7 +149,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			if(turning.isEnabled())
 				 stopPID();
 		}
-		
+		//Should be cam2 trying the auto aim code for upper target probably wont work 
 		pixelsFromEdge = cam2.getPixelsFromEdge();
 		SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
