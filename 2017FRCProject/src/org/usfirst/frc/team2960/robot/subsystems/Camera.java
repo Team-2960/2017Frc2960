@@ -23,6 +23,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private double X = 0.0;
 	private double xWidth = 0.0;
 	private double pixelsFromEdge = 0.0;
+	private double pixelsFromEdgeBoiler = 0.0;
 	private double centerX2 = 0.0;
 	private double centerY = 0.0;
 	private double centerY2 = 0.0;
@@ -55,18 +56,24 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private void startThread(){
 	
 		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-			if(pipeline.filterContoursOutput().size() >= 2){
+			if(pipeline.filterContoursOutput().size() >= 1){
 				Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-				Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-				
 				synchronized (imgLock){
 					X = r.x;
 					xWidth = r.width;
 					centerX = r.x + (r.width / 2);
 					howManyBoxes = pipeline.filterContoursOutput().size();
-					centerX2 = r2.x + (r2.width / 2);
+					if(pipeline.filterContoursOutput().size() >= 2){
+						Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));	
+						centerX2 = r2.x + (r2.width / 2);
+					}
+					else
+						centerX2 = 0;
+					
 				}
 			}
+			
+			
 		});
 		visionThread.start();
 	}
@@ -89,13 +96,16 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		}
 		
 		pixelsFromEdge = (testX2 + testX) / 2;
-		
+		pixelsFromEdgeBoiler = centerX;
 	
 		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
 	}
 	
 	public double GetPixelsFromEdge(){
 		return pixelsFromEdge;
+	}
+	public double GetPixelsFromEdgeBoiler(){
+		return pixelsFromEdgeBoiler;
 	}
 	public double getBoilerDist(){
 		return boilerDist;

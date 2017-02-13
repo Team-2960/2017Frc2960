@@ -34,6 +34,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	Camera cam;
 	Camera cam2;
 	double pixelsFromEdge = 0.0;
+	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
 	boolean OnOff;
 	double awayFromTarget;
@@ -41,6 +42,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
+	boolean isGearCam = false;
+	double centerOfCam;
 	
 	public DriveTrain(){
 		//Talons
@@ -114,12 +117,12 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public void turnToTarget(){
 		  
 		 
-		  if(pixelsFromEdge > 160){
-				 awayFromTarget = pixelsFromEdge - 160;
+		  if(pixelsFromEdge > centerOfCam){
+				 awayFromTarget = pixelsFromEdge - centerOfCam;
 				 direction = 1;
 			 }
 			else{
-				 awayFromTarget = 160 - pixelsFromEdge;
+				 awayFromTarget = centerOfCam - pixelsFromEdge;
 				 direction = -1;
 			 }
 			 if(awayFromTarget > 150)
@@ -158,8 +161,16 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 stopPID();
 		}
 		//Should be cam2 trying the auto aim code for upper target probably wont work 
-		pixelsFromEdge = cam2.getPixelsFromEdge();
-		SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
+		if (isGearCam = true){
+			pixelsFromEdge = cam2.getPixelsFromEdge();
+			SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
+			centerOfCam = 160;
+		}
+		else if (isGearCam = false){
+			pixelsFromEdge = cam.GetPixelsFromEdgeBoiler();
+			SmartDashboard.putNumber("Pixels From Edge Boiler", pixelsFromEdge);
+			centerOfCam = 100;
+		}
 		
 	}
 
@@ -175,13 +186,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		this.resetGyro();
 		rt1.setPosition(0);
 		lt1.setPosition(0);	
-	}
-	
-	
-	
-	
-	
-	
+	}	
 	
 	@Override
 	protected void initDefaultCommand() {
