@@ -42,7 +42,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
-	boolean isGearCam = true;
+	boolean isGearCam = false;
 	double centerOfCam;
 	
 	public DriveTrain(){
@@ -67,6 +67,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		speedStart = 40;
 	}
 	public void setSpeed(double right, double left){
+		
 		rt1.set(right); 
 		rt2.set(-right);
 		rt3.set(-right);
@@ -89,6 +90,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  public void addTurn(double right, double left){
+		  SmartDashboard.putNumber("Right movement PID", right);
+			SmartDashboard.putNumber("Left movement PID", left);
 		  setSpeed(right + pidOIRight, left + pidOILeft);
 	  }
 	  
@@ -153,7 +156,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("Right movement", pidOIRight);
 		SmartDashboard.putNumber("Left movement", pidOILeft);
 		
-		
+		SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
 		
 		if(OnOff)
@@ -161,16 +164,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		else{
 			if(turning.isEnabled())
 				 stopPID();
-		}
-		//Should be cam2 trying the auto aim code for upper target probably wont work 
+		} 
 		if (isGearCam = true){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
-			SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 			centerOfCam = 160;
 		}
 		else if (isGearCam = false){
 			pixelsFromEdge = cam.GetPixelsFromEdgeBoiler();
-			SmartDashboard.putNumber("Pixels From Edge Boiler", pixelsFromEdge);
 			centerOfCam = 100;
 		}
 		

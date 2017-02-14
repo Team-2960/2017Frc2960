@@ -96,7 +96,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		}
 		
 		pixelsFromEdge = (testX2 + testX) / 2;
-		pixelsFromEdgeBoiler = centerX;
+		pixelsFromEdgeBoiler = testX;
 	
 		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
 	}

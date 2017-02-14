@@ -31,15 +31,12 @@ public class OI{
 		if(stick.getRawButton(2))
 			push.ringLightOff();
 		if(stick.getRawButton(3)){
-			drive.setSetpoint(0);
-			//drive.setTurnToTarget(true);
+			drive.setTurnToTarget(true);
 			drive.setPidGo(true);
-			drive.startPID();
 		}
 		if(stick.getRawButton(4)){
-			//drive.setTurnToTarget(false);
+			drive.setTurnToTarget(false);
 			drive.setPidGo(false);
-			drive.stopPID();
 		}
 		
 		
