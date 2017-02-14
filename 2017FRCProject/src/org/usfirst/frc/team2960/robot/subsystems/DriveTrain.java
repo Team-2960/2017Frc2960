@@ -150,6 +150,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("Encoder 2", lt1.getPosition());
 		SmartDashboard.putNumber("Encoder 2 Velocity", lt1.getEncVelocity());
 		
+		SmartDashboard.putNumber("Right movement", pidOIRight);
+		SmartDashboard.putNumber("Left movement", pidOILeft);
 		
 		
 		

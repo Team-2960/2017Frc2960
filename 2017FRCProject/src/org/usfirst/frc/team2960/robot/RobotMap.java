@@ -32,6 +32,7 @@ public class RobotMap {
 	public static double d2 = 0.0001;
 	//analog
 	public static int Gyro = 0;
+	public static int GearPushButton = 1;
 	//DIO
 	public static int photoeyeShooter = 0;
 	

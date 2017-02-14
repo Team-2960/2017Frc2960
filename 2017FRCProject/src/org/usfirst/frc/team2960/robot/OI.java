@@ -20,7 +20,7 @@ public class OI{
 			drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
 		else{
-			
+			drive.runPidOI(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
 		if(stick.getRawButton(6))
 			drive.shift(true);
@@ -30,10 +30,20 @@ public class OI{
 			push.ringLightOn();
 		if(stick.getRawButton(2))
 			push.ringLightOff();
-		if(stick.getRawButton(3))
-			drive.setTurnToTarget(true);
-		if(stick.getRawButton(4))
-			drive.setTurnToTarget(false);
+		if(stick.getRawButton(3)){
+			drive.setSetpoint(0);
+			//drive.setTurnToTarget(true);
+			drive.setPidGo(true);
+			drive.startPID();
+		}
+		if(stick.getRawButton(4)){
+			//drive.setTurnToTarget(false);
+			drive.setPidGo(false);
+			drive.stopPID();
+		}
+		
+		
+		
 	
 	}
 	
