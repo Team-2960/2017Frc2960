@@ -19,6 +19,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	Relay ringLight;
 	DigitalInput gearButton;
 	DigitalInput gearSensor;
+	boolean autoGearPush = true;
 	
 	public GearPusher(){
 		GearPusher = new DoubleSolenoid(RobotMap.gearPusher, RobotMap.gearPusher2);
@@ -47,10 +48,22 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	public void ringLightOff(){
 		ringLight.set(Relay.Value.kOff);
 	}
+	public void autoPush(){
+		if(gearButton.get())
+			turnOn();
+		else
+			turnOff();
+			
+	}
+	public void setAutoGearPush(boolean On){
+		autoGearPush = On;
+	}
 	@Override
 	public void update() {
 		SmartDashboard.putBoolean("Gear Button", gearButton.get());
 		SmartDashboard.putBoolean("Gear Sensor", gearSensor.get());
+		if(autoGearPush)
+			autoPush();
 	}
 
 	@Override
