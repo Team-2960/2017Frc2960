@@ -42,7 +42,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
-	boolean isGearCam = false;
+	boolean isGearCam = true;
 	double centerOfCam;
 	
 	public DriveTrain(){
