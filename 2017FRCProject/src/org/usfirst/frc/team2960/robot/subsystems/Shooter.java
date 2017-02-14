@@ -17,12 +17,10 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	CANTalon shoot;
 	double speed = .90;//should be .9
 	boolean canMove = false;
-	DigitalInput photoeye;
 	
 	
 	public Shooter(){
 		shoot = new CANTalon(RobotMap.shooter);
-		photoeye = new DigitalInput(RobotMap.photoeyeShooter);
 		shoot.setP(RobotMap.p2);
 		shoot.setI(RobotMap.i2);
 		shoot.setD(RobotMap.d2);
@@ -61,7 +59,6 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	public void update() {
 		runShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
-		SmartDashboard.putBoolean("Photoeye value", photoeye.get());
 		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
 		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
 		

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem implements PeriodicUpdate  {
@@ -29,7 +30,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	
 	DoubleSolenoid shiftSol;
 	AnalogGyro gyro;
-	PIDController turning;
+	public PIDController turning;
 	TurnControl turn;
 	Camera cam;
 	Camera cam2;
@@ -42,7 +43,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
-	boolean isGearCam = false;
+	boolean isGearCam = true;
 	double centerOfCam;
 	
 	public DriveTrain(){

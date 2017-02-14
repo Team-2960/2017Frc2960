@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,8 +25,7 @@ public class Robot extends IterativeRobot {
 	
 	Joystick stick;
 	Joystick operator;
-	DriveTrain drivetrain;
-	DigitalInput sensor;
+	public DriveTrain drivetrain;
 	Shooter shoot;
 	Intake intake;
 	Agitator agi;
@@ -38,7 +38,6 @@ public class Robot extends IterativeRobot {
       stick = new Joystick(0);
       operator = new Joystick(1);
       drivetrain = new DriveTrain();
-      sensor = new DigitalInput(1);
       shoot = new Shooter();
       intake = new Intake();
       agi = new Agitator();
@@ -60,6 +59,7 @@ public class Robot extends IterativeRobot {
     public void periodicUpdate(){
     	shoot.update();
     	drivetrain.update();
+    	push.update();
     	
     }
     public void periodicStart(){
@@ -91,7 +91,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    
+    	
+    	
     }
     
 }
