@@ -49,7 +49,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		ringLight.set(Relay.Value.kOff);
 	}
 	public void autoPush(){
-		if(gearButton.get())
+		if(!gearButton.get())
 			turnOn();
 		else
 			turnOff();
