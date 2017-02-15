@@ -58,12 +58,13 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		if(!gearButton.get()){
 			turnOn();
 			pushButtonTripped = true;
+			timerStarted = true;
 		}
 		else if (gearButton.get() && pushButtonTripped){
 			pusherDelay.start();
 			pusherDelay.reset();
 			pushButtonTripped = false;
-			timerStarted = true;
+			
 						
 		}
 		else if(pusherDelay.get() > RobotMap.gearPushTime && !pushButtonTripped){
