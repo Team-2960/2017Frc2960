@@ -47,10 +47,14 @@ public class OI{
 	}
 	
 	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
-		if(stick.getRawButton(2))
+		if(stick.getRawButton(2)){
 			push.turnOn();
-		else
+			push.setAutoGearPush(false);
+		}
+		else{
 			push.turnOff();
+			push.setAutoGearPush(true);
+		}
 		if(stick.getRawButton(6))
 			agi.startAgitator();
 		else if(stick.getRawButton(5))
