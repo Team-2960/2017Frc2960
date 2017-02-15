@@ -22,6 +22,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	DigitalInput gearSensor;
 	boolean autoGearPush = true;
 	boolean pushButtonTripped = false;
+	boolean timerStarted = false;
 	Timer pusherDelay;
 	
 	public GearPusher(){
@@ -37,7 +38,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		GearPusher.set(Value.kForward);
 	}
 	public void turnOff(){
-		if(gearButton.get() || !autoGearPush)
+		if(gearButton.get() && !timerStarted || !autoGearPush )
 			GearPusher.set(Value.kReverse);
 	}
 	
@@ -62,9 +63,11 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 			pusherDelay.start();
 			pusherDelay.reset();
 			pushButtonTripped = false;
+			timerStarted = true;
 						
 		}
 		else if(pusherDelay.get() > RobotMap.gearPushTime && !pushButtonTripped){
+			timerStarted = false;
 			turnOff();
 			pusherDelay.stop();
 			
