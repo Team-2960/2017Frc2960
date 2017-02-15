@@ -18,22 +18,15 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private static final double THETA_Y = 36.305;
 	
 	private VisionThread visionThread;
-	private VisionThread visionThreadBoiler;
 	private double centerX = 0.0;
-	private double X = 0.0;
-	private double xWidth = 0.0;
 	private double pixelsFromEdge = 0.0;
 	private double pixelsFromEdgeBoiler = 0.0;
 	private double centerX2 = 0.0;
-	private double centerY = 0.0;
-	private double centerY2 = 0.0;
 	private double yHeightTotal = 0.0;
 	private double boilerDist = 0.0;
 	private int howManyBoxes = 0;
-	private int frontAngleOfCamera = 55;
-	private int backAngleOfCamera = 10;
-	double testX;
-	double testX2;
+	double midpointBox;
+	double midpointBox2;
 	double center;
 	double height;
 	double x;
@@ -42,11 +35,9 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	
 	
 	private final Object imgLock = new Object();
-	private final Object imgLock2 = new Object();
 	
 	private UsbCamera camera;
-	public Camera(int cameraPort){   
-		//camera = new UsbCamera(name, "/dev/video0");
+	public Camera(int cameraPort){  
 		camera = CameraServer.getInstance().startAutomaticCapture(cameraPort);
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 		camera.setBrightness(0);
@@ -59,8 +50,6 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 			if(pipeline.filterContoursOutput().size() >= 1){
 				Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 				synchronized (imgLock){
-					X = r.x;
-					xWidth = r.width;
 					centerX = r.x + (r.width / 2);
 					howManyBoxes = pipeline.filterContoursOutput().size();
 					if(pipeline.filterContoursOutput().size() >= 2){
@@ -86,17 +75,13 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		
 		//SmartDashboard.putString("camrea path", camera.getPath());
 		
-	
+	//BETTER
 		synchronized(imgLock){
-			x = this.X;
-			width1 = this.xWidth;
-			testX = this.centerX;
 			amount = this.howManyBoxes;
-			testX2 = this.centerX2;
+			pixelsFromEdge = (this.centerX2 + this.centerX) / 2;
+			pixelsFromEdgeBoiler = midpointBox;
 		}
 		
-		pixelsFromEdge = (testX2 + testX) / 2;
-		pixelsFromEdgeBoiler = testX;
 	
 		boilerDist = TARGET_HEIGHT * IMG_HEIGHT / (yHeightTotal * Math.tan(Math.toRadians(THETA_Y)));
 	}
