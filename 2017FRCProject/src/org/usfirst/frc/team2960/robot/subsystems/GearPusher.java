@@ -33,7 +33,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		GearPusher.set(Value.kForward);
 	}
 	public void turnOff(){
-		if(gearButton.get())
+		if(gearButton.get() || !autoGearPush)
 			GearPusher.set(Value.kReverse);
 	}
 	
