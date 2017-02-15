@@ -32,6 +32,8 @@ public class RobotMap {
 	public static double d2 = 0.0001;
 	//analog
 	public static int Gyro = 0;
+	//Gear Pusher Timer
+	public static int gearPushTime = 2;
 	
 	
 	

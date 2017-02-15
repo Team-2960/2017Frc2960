@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,6 +21,8 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	DigitalInput gearButton;
 	DigitalInput gearSensor;
 	boolean autoGearPush = true;
+	boolean pushButtonTripped = false;
+	Timer pusherDelay;
 	
 	public GearPusher(){
 		GearPusher = new DoubleSolenoid(RobotMap.gearPusher, RobotMap.gearPusher2);
@@ -27,6 +30,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		ringLight = new Relay(RobotMap.ringLight);
 		gearButton = new DigitalInput(RobotMap.GearPushButton);
 		gearSensor = new DigitalInput(RobotMap.GearSensor);
+		pusherDelay = new Timer();
 	}
 	
 	public void turnOn(){
@@ -50,10 +54,21 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		ringLight.set(Relay.Value.kOff);
 	}
 	public void autoPush(){
-		if(!gearButton.get())
+		if(!gearButton.get()){
 			turnOn();
-		else
+			pushButtonTripped = true;
+		}
+		else if (gearButton.get() && pushButtonTripped){
+			pusherDelay.start();
+			pusherDelay.reset();
+			pushButtonTripped = false;
+						
+		}
+		else if(pusherDelay.get() > RobotMap.gearPushTime && !pushButtonTripped){
 			turnOff();
+			pusherDelay.stop();
+			
+		}
 			
 	}
 	public void setAutoGearPush(boolean On){
