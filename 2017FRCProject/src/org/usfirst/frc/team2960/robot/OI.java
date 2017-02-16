@@ -29,16 +29,26 @@ public class OI{
 		if(stick.getRawButton(5))
 			drive.shift(false);
 		if(stick.getRawButton(1))
-			push.ringLightOn();
+			drive.setSetpoint(90);
 		if(stick.getRawButton(2))
-			push.ringLightOff();
+			drive.setSetpoint(45);
 		if(stick.getRawButton(3)){
+			push.ringLightOn();
+			/*
 			drive.setTurnToTarget(true);
+			*/
+			drive.startPID();
 			drive.setPidGo(true);
+			
 		}
 		if(stick.getRawButton(4)){
+			push.ringLightOff();
+			drive.stopPID();
+			/*
 			drive.setTurnToTarget(false);
+			*/
 			drive.setPidGo(false);
+			
 		}
 		
 		

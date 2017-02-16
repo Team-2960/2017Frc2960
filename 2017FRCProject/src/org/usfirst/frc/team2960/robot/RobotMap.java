@@ -23,8 +23,8 @@ public class RobotMap {
 	public static int flap = 4;
  	public static int flap2 = 5;
 	//pid
-	public static double p1 = 0.0001;
-	public static double i1 = 0.005;
+	public static double p1 = 0.0075;
+	public static double i1 = 0.0001;
 	public static double d1 = 0.0001;
 	
 	public static double p2 = .0002;
@@ -40,5 +40,6 @@ public class RobotMap {
 	//DIO
 	public static int GearSensor = 0;
 	public static int GearPushButton = 1;
+	public static int ShooterPhotoeye = 2;
 	
 }
