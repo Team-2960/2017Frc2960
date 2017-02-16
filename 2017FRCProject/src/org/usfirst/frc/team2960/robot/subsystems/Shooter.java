@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
 	CANTalon shoot;
-	double speed = .95;//should be .9
+	double speed = 1;//should be .9
 	boolean canMove = false;
 	DigitalInput shooterPhotoeye;
 	
