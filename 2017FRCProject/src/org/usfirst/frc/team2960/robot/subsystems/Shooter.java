@@ -8,6 +8,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +19,8 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	double speed = 1;//should be .9
 	boolean canMove = false;
 	DigitalInput shooterPhotoeye;
+	Timer photoeyeTripped;
+	double photoeyeTime = .3;
 	
 	public Shooter(){
 		shoot = new CANTalon(RobotMap.shooter);
@@ -54,11 +57,23 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 		else
 			shoot.set(0);
 	}
+	public void pulseShooter(){
+		if(shooterPhotoeye.get()){
+			speed = 1;
+			photoeyeTripped.start();
+		}
+		else if(photoeyeTripped.get() > photoeyeTime){
+			photoeyeTripped.stop();
+			photoeyeTripped.reset();
+			speed = .9;
+		}
+	}
 	
 	
 	@Override
 	public void update() {
 		runShooter();
+		pulseShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
 		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
 		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
