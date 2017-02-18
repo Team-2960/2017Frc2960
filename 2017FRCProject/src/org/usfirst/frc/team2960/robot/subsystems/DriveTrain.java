@@ -30,8 +30,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	
 	DoubleSolenoid shiftSol;
 	AnalogGyro gyro;
-	public PIDController turning;
+	PIDController turning;
+	PIDController moveing;
 	TurnControl turn;
+	DriveTrainInputPID moveingInput;
+	DriveTrainOutputPID moveingOutput;
 	Camera cam;
 	Camera cam2;
 	double pixelsFromEdge = 0.0;
@@ -43,7 +46,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
-	boolean isGearCam = true;
+	public boolean isGearCam = false;
 	double centerOfCam;
 	
 	public DriveTrain(){
@@ -62,9 +65,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		//sensors
 		gyro = new AnalogGyro(RobotMap.Gyro);
 		//PID
+		moveingInput = new DriveTrainInputPID(this);
+		moveingOutput = new DriveTrainOutputPID(this);
 		turn = new TurnControl(this);
 		turning = new PIDController(RobotMap.p1, RobotMap.i1, RobotMap.d1, gyro, turn);
+		moveing = new PIDController(RobotMap.p3, RobotMap.i3, RobotMap.d3, moveingInput, moveingOutput);
+		gyro.setPIDSourceType(PIDSourceType.kRate);
 		gyro.calibrate();
+		moveingInput.setPIDSourceType(PIDSourceType.kRate);
 		speedStart = 40;
 	}
 	public void setSpeed(double right, double left){
@@ -86,13 +94,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	}
 	
 	  public void startPID(){
-		  gyro.setPIDSourceType(PIDSourceType.kRate);
+		 
 		  turning.enable();
 	  }
 	  
 	  public void addTurn(double right, double left){
 		  SmartDashboard.putNumber("Right movement PID", right);
-			SmartDashboard.putNumber("Left movement PID", left);
+		  SmartDashboard.putNumber("Left movement PID", left);
 		  setSpeed(right + pidOIRight, left + pidOILeft);
 	  }
 	  
@@ -105,6 +113,17 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  if(turning.isEnabled()){
 			  turning.disable();
 		  }
+	  }
+	  public void startEncPID(){
+		  moveing.enable();
+	  }
+	  public void stopEncPID(){
+		  if(moveing.isEnabled()){
+			  moveing.disable();
+		  }
+	  }
+	  public void setEncSetpoint(double setpoint){
+		  moveing.setSetpoint(setpoint);
 	  }
 	  public double getGyro(){
 	    return gyro.getRate();
@@ -133,11 +152,17 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 setSetpoint(speedStart * direction);
 			 else if(awayFromTarget < 150 && awayFromTarget > 100)
 				 setSetpoint((speedStart - 10) * direction);
-			 else if(awayFromTarget < 100 && awayFromTarget > 10)
+			 else if(awayFromTarget < 100 && awayFromTarget > 20)
 				 setSetpoint((speedStart - 20) * direction);
-			 else if(awayFromTarget <= 10)
+			 else if(awayFromTarget <= 20)
 				 setSetpoint(0);
-			 if(!turning.isEnabled())
+			 if(cam2.getYTotal() <= 50){
+				 if(isGearCam){
+				 setPidGo(false);
+				 OnOff = false;
+				 }
+			 }
+			 else if(!turning.isEnabled())
 				 startPID();
 	  }
 	@Override
@@ -159,20 +184,35 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 		SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
+		SmartDashboard.putNumber("Setpoint", turning.getSetpoint());
+		SmartDashboard.putBoolean("PID ENABlEd", turning.isEnabled());
+		SmartDashboard.putNumber("Y total", cam2.yTotal);
 		
+		SmartDashboard.putBoolean("IS THE ENC PID ON", moveing.isEnabled());
+		SmartDashboard.putNumber("PID ENC SETPOINT", moveing.getSetpoint());
+		
+		SmartDashboard.putNumber("ENC PID GET", moveingInput.pidGet());
+		SmartDashboard.putNumber("AVG ERORR!!!!!",moveing.getAvgError());
+		
+		SmartDashboard.putNumber("P!!!!!!!!!!!!!!!", moveing.getP());
+		SmartDashboard.putNumber("I!!!!!!!!!!!!!!!", moveing.getI());
+		SmartDashboard.putNumber("D!!!!!!!!!!!!!!!", moveing.getD());
+		/*
 		if(OnOff)
 			turnToTarget();
+		
 		else{
 			if(turning.isEnabled())
 				 stopPID();
-		} 
-		if (isGearCam = true){
+		}*/
+		if (isGearCam){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
 			centerOfCam = 160;
 		}
-		else if (isGearCam = false){
+		else if (!isGearCam){
+			SmartDashboard.putString("roor", "Tiger");
 			pixelsFromEdge = cam.GetPixelsFromEdgeBoiler();
-			centerOfCam = 100;
+			centerOfCam = 180;
 		}
 		
 	}
@@ -181,6 +221,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public void runPidOI(double right, double left){
 		pidOIRight = right;
 		pidOILeft = left;
+	}
+	
+	public double getRightEncoder(){
+		return -rt1.getEncVelocity();
+	}
+	public double getLeftEncoder(){
+		return lt1.getEncVelocity();
 	}
 	
 	

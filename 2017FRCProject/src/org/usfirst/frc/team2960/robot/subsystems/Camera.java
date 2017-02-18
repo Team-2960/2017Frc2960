@@ -25,14 +25,13 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	private double yHeightTotal = 0.0;
 	private double boilerDist = 0.0;
 	private int howManyBoxes = 0;
-	double midpointBox;
-	double midpointBox2;
 	double center;
 	double height;
 	double x;
+	double y;
 	double width1;
 	int amount;
-	
+	double yTotal;
 	
 	private final Object imgLock = new Object();
 	
@@ -52,6 +51,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 				synchronized (imgLock){
 					centerX = r.x + (r.width / 2);
 					howManyBoxes = pipeline.filterContoursOutput().size();
+					y = r.y;
 					if(pipeline.filterContoursOutput().size() >= 2){
 						Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));	
 						centerX2 = r2.x + (r2.width / 2);
@@ -79,7 +79,8 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 		synchronized(imgLock){
 			amount = this.howManyBoxes;
 			pixelsFromEdge = (this.centerX2 + this.centerX) / 2;
-			pixelsFromEdgeBoiler = midpointBox;
+			pixelsFromEdgeBoiler = centerX;
+			yTotal = this.y;
 		}
 		
 	
@@ -104,7 +105,9 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	public double getPixelsFromEdge(){
 		return pixelsFromEdge;
 	}
-	
+	public double getYTotal(){
+		return yTotal;
+	}
 	@Override
 	public void start() {
 		

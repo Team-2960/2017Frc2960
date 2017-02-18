@@ -22,35 +22,51 @@ public class OI{
 			drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
 		else{
-			drive.runPidOI(-stick.getRawAxis(5), stick.getRawAxis(1));
+			//drive.runPidOI(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
 			drive.shift(false);
-		if(stick.getRawButton(1))
-			drive.setSetpoint(90);
-		if(stick.getRawButton(2))
+		if(stick.getRawButton(1)){
+			//shoot.setSetpoint(0);
+			//push.ringLightOn();
+			drive.setEncSetpoint(1000);
 			drive.setSetpoint(45);
+		}
+		if(stick.getRawButton(2)){
+			drive.setEncSetpoint(0);
+			drive.setSetpoint(0);
+		}
+			//shoot.setSetpoint(18000);
+			//push.ringLightOff();
 		if(stick.getRawButton(3)){
-			push.ringLightOn();
 			/*
 			drive.setTurnToTarget(true);
+			drive.setPidGo(true);
 			*/
+			drive.startEncPID();
 			drive.startPID();
 			drive.setPidGo(true);
+			//shoot.startPID();
 			
 		}
 		if(stick.getRawButton(4)){
-			push.ringLightOff();
-			drive.stopPID();
 			/*
 			drive.setTurnToTarget(false);
-			*/
 			drive.setPidGo(false);
-			
+			*/
+			//shoot.stopPID();
+			drive.stopEncPID();
+			drive.stopPID();
+			drive.setPidGo(false);
 		}
-		
+		if(stick.getRawButton(7)){
+			drive.isGearCam = false;
+		}
+		if(stick.getRawButton(8)){
+			drive.isGearCam = true;
+		}
 		
 		
 	

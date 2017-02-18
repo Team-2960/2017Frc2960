@@ -5,6 +5,7 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem implements PeriodicUpdate{
 
-	CANTalon shoot;
+	public CANTalon shoot;
 	double speed = 1;//should be .9
 	boolean canMove = false;
 	DigitalInput shooterPhotoeye;
@@ -24,22 +25,26 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	
 	public Shooter(){
 		shoot = new CANTalon(RobotMap.shooter);
+		/*
 		shoot.setP(RobotMap.p2);
 		shoot.setI(RobotMap.i2);
 		shoot.setD(RobotMap.d2);
+		shoot.changeControlMode(TalonControlMode.Speed);
 		shoot.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shoot.setPIDSourceType(PIDSourceType.kRate);
+		shoot.reverseSensor(true);
+		*/
+		//shoot.setPIDSourceType(PIDSourceType.kRate);
 		shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
+		photoeyeTripped =new Timer();
 	}
 	
 	
 	public void startPID(){
-		shoot.enable();
-		setSetpoint(5);
+		shoot.enableControl();
 	}
 	
 	public void stopPID(){
-		shoot.disable();
+		shoot.disableControl();
 	}
 	
 	
@@ -73,11 +78,13 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	@Override
 	public void update() {
 		runShooter();
-		pulseShooter();
+		//pulseShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
 		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
 		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
 		SmartDashboard.putBoolean("Shooter Photoeye", shooterPhotoeye.get());
+		SmartDashboard.putBoolean("Shooter PId Enabled", shoot.isEnabled());
+		SmartDashboard.putNumber("Shooter setpoint", shoot.getSetpoint());
 		
 	}
 
