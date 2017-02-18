@@ -165,6 +165,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			 else if(!turning.isEnabled())
 				 startPID();
 	  }
+	  public boolean closeToTarget(){
+		  boolean isInRange = false;
+		  if(cam.getYTotal() > 140 && cam.getYTotal() < 160){
+			  isInRange = true;
+		  }
+		  return isInRange;
+	  }
 	@Override
 	public void update() {
 		cam2.update();
@@ -194,9 +201,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("ENC PID GET", moveingInput.pidGet());
 		SmartDashboard.putNumber("AVG ERORR!!!!!",moveing.getAvgError());
 		
-		SmartDashboard.putNumber("P!!!!!!!!!!!!!!!", moveing.getP());
-		SmartDashboard.putNumber("I!!!!!!!!!!!!!!!", moveing.getI());
-		SmartDashboard.putNumber("D!!!!!!!!!!!!!!!", moveing.getD());
+		SmartDashboard.putBoolean("Is it in boiler range", closeToTarget());
+		
+		//SmartDashboard.putNumber("P!!!!!!!!!!!!!!!", moveing.getP());
+		//SmartDashboard.putNumber("I!!!!!!!!!!!!!!!", moveing.getI());
+		//SmartDashboard.putNumber("D!!!!!!!!!!!!!!!", moveing.getD());
 		/*
 		if(OnOff)
 			turnToTarget();
