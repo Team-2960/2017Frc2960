@@ -48,6 +48,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	double pidOILeft = 0;
 	public boolean isGearCam = false;
 	double centerOfCam;
+	double distanceForMovement;
 	
 	public DriveTrain(){
 		//Talons
@@ -135,6 +136,36 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  
 	  public void setTurnToTarget(boolean OnOff){
 		  this.OnOff = OnOff;
+	  }
+	  
+	  public void setDistance(double distance){
+		  rt1.setEncPosition(0);
+		  lt1.setEncPosition(0);
+		  this.distanceForMovement = distance;
+	  }
+	  
+	  //TODO: Ask kelly about
+	  public boolean gotToDistance(){
+		double awayFromDist = distanceForMovement -((rt1.getEncPosition() + lt1.getEncPosition())/2);
+		  
+		  if(awayFromDist > 1000){
+			  setEncSetpoint(200);
+		  }
+		  else if(awayFromDist < 1000 && awayFromDist > 500){
+			  setEncSetpoint(100);
+		  }
+		  else if(awayFromDist < 500 && awayFromDist > 100){
+			  setEncSetpoint(50);
+		  }
+		  else if(awayFromDist < 100){
+			  stopEncPID();
+			  return true;
+		  }
+		  if(!moveing.isEnabled()){
+			  startEncPID();
+		  }
+		  
+		  return false;
 	  }
 	  
 	  public void turnToTarget(){

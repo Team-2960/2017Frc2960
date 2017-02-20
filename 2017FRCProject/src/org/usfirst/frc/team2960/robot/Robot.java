@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2960.robot;
 
 import org.ietf.jgss.Oid;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
 import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,15 +26,17 @@ public class Robot extends IterativeRobot {
   
 	public static OI oi;
 	
-	Joystick stick;
-	Joystick operator;
-	public DriveTrain drivetrain;
-	Shooter shoot;
-	Intake intake;
-	Agitator agi;
-	GearPusher push;
-	PowerDistributionPanel pdp;
-	Winch winch;
+	public static Joystick stick;
+	public static Joystick operator;
+	public static DriveTrain drivetrain;
+	public static Shooter shoot;
+	public static Intake intake;
+	public static Agitator agi;
+	public static GearPusher push;
+	public static PowerDistributionPanel pdp;
+	public static Winch winch;
+	
+	Command AutonomousCammand;
 	
     public void robotInit() {
       oi = new OI();
@@ -44,6 +49,8 @@ public class Robot extends IterativeRobot {
       push = new GearPusher();
       pdp = new PowerDistributionPanel();
       winch = new Winch();
+      
+      AutonomousCammand = new MoveForwardAndPlaceGear();
     }
     
     public void disabledInit(){
@@ -64,14 +71,13 @@ public class Robot extends IterativeRobot {
     }
     public void periodicStart(){
   
-    	shoot.start();
-    	drivetrain.start();
+    	if (AutonomousCammand != null) AutonomousCammand.start();
     }
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	periodicUpdate();
+    	Scheduler.getInstance().run();
     }
 
     /**
