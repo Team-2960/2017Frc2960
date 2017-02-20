@@ -8,6 +8,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -22,34 +23,28 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	DigitalInput shooterPhotoeye;
 	Timer photoeyeTripped;
 	double photoeyeTime = .3;
+	PIDController shootPID;
 	
 	public Shooter(){
-		shoot = new CANTalon(RobotMap.shooter);
-		/*
-		shoot.setP(RobotMap.p2);
-		shoot.setI(RobotMap.i2);
-		shoot.setD(RobotMap.d2);
-		shoot.changeControlMode(TalonControlMode.Speed);
-		shoot.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shoot.reverseSensor(true);
-		*/
-		//shoot.setPIDSourceType(PIDSourceType.kRate);
+		//shoot.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		//shoot.changeControlMode(TalonControlMode.Speed);
+		//shootPID = new PIDController(RobotMap.p2,RobotMap.i2,RobotMap.d2,shoot,shoot);
 		shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
 		photoeyeTripped =new Timer();
 	}
 	
 	
 	public void startPID(){
-		shoot.enableControl();
+		shootPID.enable();
 	}
 	
 	public void stopPID(){
-		shoot.disableControl();
+		shootPID.disable();
 	}
 	
 	
 	public void setSetpoint(double setpoint){
-		shoot.setSetpoint(setpoint);
+		shootPID.setSetpoint(setpoint);
 	}
 	
 	public void turnONOFF(boolean onOff){
@@ -77,15 +72,14 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	
 	@Override
 	public void update() {
-		runShooter();
+		//runShooter();
 		//pulseShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
 		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
 		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
 		SmartDashboard.putBoolean("Shooter Photoeye", shooterPhotoeye.get());
-		SmartDashboard.putBoolean("Shooter PId Enabled", shoot.isEnabled());
-		SmartDashboard.putNumber("Shooter setpoint", shoot.getSetpoint());
-		
+		SmartDashboard.putBoolean("Shooter PId Enabled", shootPID.isEnabled());
+		SmartDashboard.putNumber("Shooter setpoint", shootPID.getSetpoint());
 	}
 
 	@Override

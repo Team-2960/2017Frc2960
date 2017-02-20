@@ -31,35 +31,40 @@ public class OI{
 		if(stick.getRawButton(1)){
 			//shoot.setSetpoint(0);
 			//push.ringLightOn();
-			drive.setEncSetpoint(1000);
-			drive.setSetpoint(45);
+			//drive.setEncSetpoint(1000);
+			//drive.setSetpoint(45);
+			//shoot.setSetpoint(2000);
 		}
 		if(stick.getRawButton(2)){
-			drive.setEncSetpoint(0);
-			drive.setSetpoint(0);
+			//drive.setEncSetpoint(0);
+			//drive.setSetpoint(0);
+			//shoot.setSetpoint(0);
 		}
 			//shoot.setSetpoint(18000);
 			//push.ringLightOff();
+		
 		if(stick.getRawButton(3)){
+			shoot.startPID();
 			/*
 			drive.setTurnToTarget(true);
 			drive.setPidGo(true);
 			*/
-			drive.startEncPID();
-			drive.startPID();
-			drive.setPidGo(true);
+			//drive.startEncPID();
+			//drive.startPID();
+			//drive.setPidGo(true);
 			//shoot.startPID();
 			
 		}
 		if(stick.getRawButton(4)){
+			shoot.stopPID();
 			/*
 			drive.setTurnToTarget(false);
 			drive.setPidGo(false);
 			*/
 			//shoot.stopPID();
-			drive.stopEncPID();
-			drive.stopPID();
-			drive.setPidGo(false);
+			//drive.stopEncPID();
+			//drive.stopPID();
+			//drive.setPidGo(false);
 		}
 		if(stick.getRawButton(7)){
 			drive.isGearCam = false;
