@@ -19,11 +19,11 @@ public class Winch extends Subsystem implements PeriodicUpdate{
 	}
 	
 	public void WinchUP(){
-		winch.set(speed);
+		winch.set(-speed);
 	}
 	
 	public void WinchDown(){
-		winch.set(-speed);
+		winch.set(speed);
 	}
 	
 	public void WinchStop(){

@@ -23,6 +23,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	boolean autoGearPush = true;
 	boolean pushButtonTripped = false;
 	boolean timerStarted = false;
+	public boolean activateGearPush = true;
 	Timer pusherDelay;
 	
 	public GearPusher(){
@@ -82,7 +83,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	public void update() {
 		SmartDashboard.putBoolean("Gear Button", gearButton.get());
 		SmartDashboard.putBoolean("Gear Sensor", gearSensor.get());
-		if(autoGearPush)
+		if(autoGearPush && activateGearPush)
 			autoPush();
 	}
 

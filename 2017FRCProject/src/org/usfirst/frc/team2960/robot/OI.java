@@ -68,18 +68,32 @@ public class OI{
 			//drive.stopPID();
 			//drive.setPidGo(false);
 		}
-		if(stick.getRawButton(7)){
+		
+		if(stick.getRawButton(1))
+			push.activateGearPush = true;
+		else if (stick.getRawButton(2))
+			push.activateGearPush = false;
+		//camera control
+		
+		//change camera
+		if(stick.getRawAxis(2)>.85){
 			drive.isGearCam = false;
 		}
-		if(stick.getRawButton(8)){
+		else if(stick.getRawAxis(3) >.85){
 			drive.isGearCam = true;
 		}
+		
+		
+		if(stick.getRawButton(7) && stick.getRawButton(8) && stick.getRawButton(5) && stick.getRawButton(6))
+			winch.WinchDown();
 		
 		
 	
 	}
 	
 	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
+		
+		//Pusher overide controls
 		if(stick.getRawButton(2)){
 			push.turnOn();
 			push.setAutoGearPush(false);
@@ -88,12 +102,16 @@ public class OI{
 			push.turnOff();
 			push.setAutoGearPush(true);
 		}
+		
+		//agitator controls
 		if(stick.getRawButton(6))
 			agi.startAgitator();
 		else if(stick.getRawButton(5))
 			agi.startAgitatorReversed();
 		else
 			agi.stopAgitator();
+		
+		//shooter control
 		if(stick.getRawButton(1))
 			shoot.turnONOFF(true);
 			//shoot.startPID();
@@ -101,19 +119,21 @@ public class OI{
 		else
 			shoot.turnONOFF(false);
 			//shoot.stopPID();
-			
-		if(stick.getRawButton(8))
+		
+		//intake controls
+		if(stick.getRawAxis(3)> .85)
 			intake.startIntake();
-		else if(stick.getRawButton(7))
+		else if(stick.getRawAxis(2) > .85)
 			intake.startIntakeReversed();
 		else 
 			intake.stopIntake();
-		if(stick.getRawButton(10))
+		
+		// winch control
+		if(stick.getRawButton(3))
 			winch.WinchUP();
-		else if(stick.getRawButton(3))
-			winch.WinchDown();
 		else
 			winch.WinchStop();
+		//flap control
 		if(stick.getRawButton(4))
 			push.flapOn();
 		else 
