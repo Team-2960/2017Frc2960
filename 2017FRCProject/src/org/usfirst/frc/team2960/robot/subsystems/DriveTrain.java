@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -40,7 +41,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	double pixelsFromEdge = 0.0;
 	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
-	boolean OnOff;
+	public boolean OnOff;
 	double awayFromTarget;
 	double direction;
 	private boolean pidGo;
@@ -49,6 +50,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public boolean isGearCam = false;
 	double centerOfCam;
 	double distanceForMovement;
+	double gotTodirection;
+	public boolean autonTurnDone = false;
+	Relay ringLight;
+	public boolean isAutonOnGear = false;
 	
 	public DriveTrain(){
 		//Talons
@@ -75,6 +80,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		gyro.calibrate();
 		moveingInput.setPIDSourceType(PIDSourceType.kRate);
 		speedStart = 40;
+		ringLight = new Relay(RobotMap.ringLight);
 	}
 	public void setSpeed(double right, double left){
 		
@@ -105,7 +111,12 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  setSpeed(right + pidOIRight, left + pidOILeft);
 	  }
 	  
-	  
+	  public void ringLightOn(){
+			ringLight.set(Relay.Value.kForward);
+		}
+		public void ringLightOff(){
+			ringLight.set(Relay.Value.kOff);
+		}
 	  public void setSetpoint(double setpoint){
 		  turning.setSetpoint(setpoint);
 	  }
@@ -139,25 +150,37 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  public void setDistance(double distance){
-		  rt1.setEncPosition(0);
-		  lt1.setEncPosition(0);
-		  this.distanceForMovement = distance;
+		  rt1.setPosition(0);
+		  lt1.setPosition(0);
+		  if(distance > 0){
+			  gotTodirection = 1;
+		  }
+		  else{
+			  gotTodirection = -1;
+		  }
+		  this.distanceForMovement = Math.abs(distance);
+		  
 	  }
 	  
-	  //TODO: Ask kelly about
+	  
+	  
+	  
+	  
 	  public boolean gotToDistance(){
-		double awayFromDist = distanceForMovement -((rt1.getEncPosition() + lt1.getEncPosition())/2);
-		  
-		  if(awayFromDist > 1000){
-			  setEncSetpoint(200);
+		double awayFromDist = distanceForMovement +(((rt1.getEncPosition() + lt1.getEncPosition())/2) * gotTodirection);
+		  SmartDashboard.putNumber("awayFromDist", awayFromDist);
+		  SmartDashboard.putNumber("Enc setpoint", moveing.getSetpoint());
+		  SmartDashboard.putBoolean("is enc pid enabled", moveing.isEnabled());
+		  if(awayFromDist >= 100){
+			  setEncSetpoint(500 * gotTodirection);
 		  }
-		  else if(awayFromDist < 1000 && awayFromDist > 500){
-			  setEncSetpoint(100);
+		  else if(awayFromDist < 100 && awayFromDist > 50){
+			  setEncSetpoint(300 * gotTodirection);
 		  }
-		  else if(awayFromDist < 500 && awayFromDist > 100){
-			  setEncSetpoint(50);
+		  else if(awayFromDist < 50 && awayFromDist > 10){
+			  setEncSetpoint(200 * gotTodirection);
 		  }
-		  else if(awayFromDist < 100){
+		  else if(awayFromDist < 10){
 			  stopEncPID();
 			  return true;
 		  }
@@ -185,16 +208,22 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 setSetpoint((speedStart - 10) * direction);
 			 else if(awayFromTarget < 100 && awayFromTarget > 20)
 				 setSetpoint((speedStart - 20) * direction);
-			 else if(awayFromTarget <= 20)
+			 else if(awayFromTarget <= 20){
 				 setSetpoint(0);
+				 autonTurnDone = true;
+			 }
 			 if(cam2.getYTotal() <= 50){
 				 if(isGearCam){
 				 setPidGo(false);
 				 OnOff = false;
 				 }
 			 }
-			 else if(!turning.isEnabled())
+			 else if(!turning.isEnabled()){
 				 startPID();
+				 if(isGearCam){
+					 ringLightOn();
+				 }
+			 }
 	  }
 	  public boolean closeToTarget(){
 		  boolean isInRange = false;
@@ -205,6 +234,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	@Override
 	public void update() {
+		
+		if(cam2.getYTotal() <= 50){
+			 if(isGearCam){
+				 isAutonOnGear = true;
+			 }
+		}
+		
 		cam2.update();
 		cam.update();
 		
@@ -233,6 +269,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("AVG ERORR!!!!!",moveing.getAvgError());
 		
 		SmartDashboard.putBoolean("Is it in boiler range", closeToTarget());
+		
+		SmartDashboard.putNumber("The encoder divided", (double)((getRightEncoder() + getLeftEncoder())/2));
 		
 		//SmartDashboard.putNumber("P!!!!!!!!!!!!!!!", moveing.getP());
 		//SmartDashboard.putNumber("I!!!!!!!!!!!!!!!", moveing.getI());
@@ -273,6 +311,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	
 	@Override
 	public void start() {
+		turning.disable();
+		moveing.disable();
 		this.resetGyro();
 		rt1.setPosition(0);
 		lt1.setPosition(0);	

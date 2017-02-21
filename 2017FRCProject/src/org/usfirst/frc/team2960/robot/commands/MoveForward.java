@@ -5,6 +5,7 @@ package org.usfirst.frc.team2960.robot.commands;
 import org.usfirst.frc.team2960.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveForward extends Command {
 
@@ -12,7 +13,7 @@ public class MoveForward extends Command {
 	boolean done;
 	public MoveForward(double distance){
 		super("MoveForward");
-		this.distance = distance;
+		//this.distance = distance;
 		requires(Robot.drivetrain);
 		done = false;
 	}
@@ -22,8 +23,12 @@ public class MoveForward extends Command {
 	}
 	
 	protected void execute(){
-		//Robot.drivetrain.startEncPID();
-		if(Robot.drivetrain.gotToDistance()){
+		Robot.drivetrain.shift(false);
+		Robot.drivetrain.ringLightOn();
+		Robot.drivetrain.startEncPID();
+		Robot.drivetrain.setEncSetpoint(-400);
+		if(Robot.drivetrain.isAutonOnGear){
+			Robot.drivetrain.setEncSetpoint(0);
 			done = true;
 		}
 	}
@@ -31,6 +36,7 @@ public class MoveForward extends Command {
 	@Override
 	protected boolean isFinished() {
 		if(done){
+			Robot.drivetrain.ringLightOff();
 			return true;
 		}else{
 			return false;

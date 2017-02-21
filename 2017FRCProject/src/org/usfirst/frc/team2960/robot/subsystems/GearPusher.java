@@ -17,7 +17,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 
 	DoubleSolenoid GearPusher;
 	DoubleSolenoid Flap;
-	Relay ringLight;
+	
 	DigitalInput gearButton;
 	DigitalInput gearSensor;
 	boolean autoGearPush = true;
@@ -29,7 +29,6 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	public GearPusher(){
 		GearPusher = new DoubleSolenoid(RobotMap.gearPusher, RobotMap.gearPusher2);
 		Flap = new DoubleSolenoid(RobotMap.flap, RobotMap.flap2);
-		ringLight = new Relay(RobotMap.ringLight);
 		gearButton = new DigitalInput(RobotMap.GearPushButton);
 		gearSensor = new DigitalInput(RobotMap.GearSensor);
 		pusherDelay = new Timer();
@@ -49,12 +48,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	public void flapOff(){
 		Flap.set(Value.kReverse);
 	}
-	public void ringLightOn(){
-		ringLight.set(Relay.Value.kForward);
-	}
-	public void ringLightOff(){
-		ringLight.set(Relay.Value.kOff);
-	}
+	
 	public void autoPush(){
 		if(!gearButton.get()){
 			turnOn();

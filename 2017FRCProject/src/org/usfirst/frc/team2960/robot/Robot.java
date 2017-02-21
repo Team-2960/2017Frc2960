@@ -72,12 +72,17 @@ public class Robot extends IterativeRobot {
     public void periodicStart(){
   
     	if (AutonomousCammand != null) AutonomousCammand.start();
+    	drivetrain.start();
+    	shoot.start();
+    	push.start();
     }
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
     	Scheduler.getInstance().run();
+    	periodicUpdate();
+
     }
 
     /**
@@ -85,7 +90,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
     	periodicStart();
-    }
+      }
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
     	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);

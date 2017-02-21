@@ -25,7 +25,7 @@ public class ShooterPIDInput implements PIDSource {
 	@Override
 	public double pidGet() {
 		
-		return (double)(shoot.shoot.getEncVelocity());
+		return -(double)(shoot.shoot.getEncVelocity());
 	}
 
 }
