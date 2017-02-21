@@ -24,11 +24,17 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	Timer photoeyeTripped;
 	double photoeyeTime = .3;
 	PIDController shootPID;
+	ShooterPIDInput shootPidInput;
+	ShooterPIDOutput shootPidOutput;
 	
 	public Shooter(){
-		//shoot.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		//shoot.changeControlMode(TalonControlMode.Speed);
-		//shootPID = new PIDController(RobotMap.p2,RobotMap.i2,RobotMap.d2,shoot,shoot);
+		shoot = new CANTalon(RobotMap.shooter);
+		shootPidInput = new ShooterPIDInput(this);
+		shootPidOutput = new ShooterPIDOutput(this);
+		shoot.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		shoot.changeControlMode(TalonControlMode.Voltage);
+		shootPidInput.setPIDSourceType(PIDSourceType.kRate);
+		shootPID = new PIDController(RobotMap.p2,RobotMap.i2,RobotMap.d2,shootPidInput,shootPidOutput);
 		shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
 		photoeyeTripped =new Timer();
 	}
@@ -72,7 +78,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	
 	@Override
 	public void update() {
-		//runShooter();
+		runShooter();
 		//pulseShooter();
 		SmartDashboard.putNumber("Speed of shooter", speed);
 		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());

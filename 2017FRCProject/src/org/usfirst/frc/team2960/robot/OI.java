@@ -34,11 +34,13 @@ public class OI{
 			//drive.setEncSetpoint(1000);
 			//drive.setSetpoint(45);
 			//shoot.setSetpoint(2000);
+			shoot.setSetpoint(2000);
 		}
 		if(stick.getRawButton(2)){
 			//drive.setEncSetpoint(0);
 			//drive.setSetpoint(0);
 			//shoot.setSetpoint(0);
+			shoot.setSetpoint(0);
 		}
 			//shoot.setSetpoint(18000);
 			//push.ringLightOff();

@@ -15,7 +15,7 @@ public class DriveTrainInputPID implements PIDSource {
 	
 	@Override
 	  public void setPIDSourceType(PIDSourceType pidSource) {
-	    m_pidSource = pidSource;
+	    m_pidSource = pidSource; 
 	  }
 
 	  @Override
