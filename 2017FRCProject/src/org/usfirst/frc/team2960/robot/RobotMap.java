@@ -31,8 +31,8 @@ public class RobotMap {
 	public static double i2 = .0001;
 	public static double d2 = 0;
 	
-	public static double p3 = 0.000015;
-	public static double i3 = 0;
+	public static double p3 = 0.000017;
+	public static double i3 = 0.0002;
 	public static double d3 = 0;
 	//analog
 	public static int Gyro = 0;

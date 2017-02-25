@@ -13,7 +13,10 @@ public class TurnControl implements PIDOutput{
 	
 	@Override
 	public void pidWrite(double output) {
-			drive.addTurn(-output, -output);
+		if(drive.isTurnOnly)
+			drive.runPidOI(-output, -output);
+		else 
+			drive.setSpeed(-output, -output);
 			
 	}
 

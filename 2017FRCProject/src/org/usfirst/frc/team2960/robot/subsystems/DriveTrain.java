@@ -47,13 +47,14 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	private boolean pidGo;
 	double pidOIRight = 0;
 	double pidOILeft = 0;
-	public boolean isGearCam = false;
+	public boolean isGearCam = true;
 	double centerOfCam;
 	double distanceForMovement;
 	double gotTodirection;
 	public boolean autonTurnDone = false;
 	Relay ringLight;
 	public boolean isAutonOnGear = false;
+	public boolean isTurnOnly = true;
 	
 	public DriveTrain(){
 		//Talons
@@ -124,6 +125,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public void stopPID(){
 		  if(turning.isEnabled()){
 			  turning.disable();
+			  pidOIRight = 0;
+			  pidOILeft = 0;
 		  }
 	  }
 	  public void startEncPID(){
@@ -163,24 +166,28 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  
-	  
+	  public double PerInch(double input){
+		  return ((input / 8192) * Math.PI * 4);
+	  }
 	  
 	  
 	  public boolean gotToDistance(){
-		double awayFromDist = distanceForMovement +(((rt1.getEncPosition() + lt1.getEncPosition())/2) * gotTodirection);
+		  double awayFromDist = distanceForMovement - (((PerInch(lt1.getPosition()) - PerInch(rt1.getPosition())) / 2) * gotTodirection);
+		  SmartDashboard.putNumber("Encoder 1", rt1.getPosition());
+		  SmartDashboard.putNumber("Encoder 2", lt1.getPosition());
 		  SmartDashboard.putNumber("awayFromDist", awayFromDist);
 		  SmartDashboard.putNumber("Enc setpoint", moveing.getSetpoint());
 		  SmartDashboard.putBoolean("is enc pid enabled", moveing.isEnabled());
-		  if(awayFromDist >= 100){
+		  if(awayFromDist >= 20){
+			  setEncSetpoint(2000 * gotTodirection);
+		  }
+		  else if(awayFromDist < 20 && awayFromDist > 10){
+			  setEncSetpoint(1000 * gotTodirection);
+		  }
+		  else if(awayFromDist < 10 && awayFromDist > 1){
 			  setEncSetpoint(500 * gotTodirection);
 		  }
-		  else if(awayFromDist < 100 && awayFromDist > 50){
-			  setEncSetpoint(300 * gotTodirection);
-		  }
-		  else if(awayFromDist < 50 && awayFromDist > 10){
-			  setEncSetpoint(200 * gotTodirection);
-		  }
-		  else if(awayFromDist < 10){
+		  else if(awayFromDist <= 1){
 			  stopEncPID();
 			  return true;
 		  }
@@ -193,7 +200,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  
 	  public void turnToTarget(){
 		  
-		 
+		 SmartDashboard.putNumber("pixels from edge", pixelsFromEdge);
 		  if(pixelsFromEdge > centerOfCam){
 				 awayFromTarget = pixelsFromEdge - centerOfCam;
 				 direction = 1;
@@ -206,9 +213,9 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 setSetpoint(speedStart * direction);
 			 else if(awayFromTarget < 150 && awayFromTarget > 100)
 				 setSetpoint((speedStart - 10) * direction);
-			 else if(awayFromTarget < 100 && awayFromTarget > 20)
+			 else if(awayFromTarget < 100 && awayFromTarget > 15)
 				 setSetpoint((speedStart - 20) * direction);
-			 else if(awayFromTarget <= 20){
+			 else if(awayFromTarget <= 15){
 				 setSetpoint(0);
 				 autonTurnDone = true;
 			 }
@@ -221,7 +228,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			 else if(!turning.isEnabled()){
 				 startPID();
 				 if(isGearCam){
-					 ringLightOn();
+					 //ringLightOn();
 				 }
 			 }
 	  }
@@ -249,8 +256,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		SmartDashboard.putNumber("Gyro Rate", getGyro());
 		
 		SmartDashboard.putNumber("Encoder 1 Velocity", rt1.getEncVelocity());
-		SmartDashboard.putNumber("Encoder 1", rt1.getPosition());
-		SmartDashboard.putNumber("Encoder 2", lt1.getPosition());
+		
 		SmartDashboard.putNumber("Encoder 2 Velocity", lt1.getEncVelocity());
 		
 		SmartDashboard.putNumber("Right movement", pidOIRight);
@@ -275,17 +281,17 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		//SmartDashboard.putNumber("P!!!!!!!!!!!!!!!", moveing.getP());
 		//SmartDashboard.putNumber("I!!!!!!!!!!!!!!!", moveing.getI());
 		//SmartDashboard.putNumber("D!!!!!!!!!!!!!!!", moveing.getD());
-		/*
+		
 		if(OnOff)
 			turnToTarget();
 		
 		else{
 			if(turning.isEnabled())
 				 stopPID();
-		}*/
+		}
 		if (isGearCam){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
-			centerOfCam = 160;
+			centerOfCam = 170;
 		}
 		else if (!isGearCam){
 			SmartDashboard.putString("roor", "Tiger");
@@ -315,7 +321,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		moveing.disable();
 		this.resetGyro();
 		rt1.setPosition(0);
-		lt1.setPosition(0);	
+		lt1.setPosition(0);
+		pidOIRight = 0;
+		pidOILeft = 0;
+		isTurnOnly = true;
 	}	
 	
 	@Override

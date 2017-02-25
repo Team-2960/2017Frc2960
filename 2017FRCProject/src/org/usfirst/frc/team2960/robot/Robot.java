@@ -3,6 +3,7 @@ package org.usfirst.frc.team2960.robot;
 
 
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardWithAlignAndPlaceGear;
 import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
@@ -50,7 +51,8 @@ public class Robot extends IterativeRobot {
       pdp = new PowerDistributionPanel();
       winch = new Winch();
       
-      AutonomousCammand = new MoveForwardAndPlaceGear();
+      AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+      //AutonomousCammand = new MoveForwardAndPlaceGear();
     }
     
     public void disabledInit(){
@@ -95,7 +97,7 @@ public class Robot extends IterativeRobot {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
     	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
         periodicUpdate();
-        SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
+        //SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
     
     /**
