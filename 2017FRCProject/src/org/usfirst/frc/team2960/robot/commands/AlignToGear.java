@@ -20,7 +20,7 @@ public class AlignToGear extends Command {
 	}
 	
 	protected void execute(){
-		Robot.drivetrain.setTurnToTarget(true);;
+		Robot.drivetrain.setTurnToTarget(true);
 		if(Robot.drivetrain.autonTurnDone){
 			done = true;
 		}
