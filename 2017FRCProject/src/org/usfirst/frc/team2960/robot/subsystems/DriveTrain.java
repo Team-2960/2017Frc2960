@@ -152,6 +152,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  this.OnOff = OnOff;
 	  }
 	  
+	  
+	  public void resetEncoder(){
+		  rt1.setPosition(0);
+		  lt1.setPosition(0); 
+	  }
 	  public void setDistance(double distance){
 		  rt1.setPosition(0);
 		  lt1.setPosition(0);
@@ -179,13 +184,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  SmartDashboard.putNumber("Enc setpoint", moveing.getSetpoint());
 		  SmartDashboard.putBoolean("is enc pid enabled", moveing.isEnabled());
 		  if(awayFromDist >= 20){
-			  setEncSetpoint(2000 * gotTodirection);
+			  setEncSetpoint(2500 * gotTodirection);
 		  }
 		  else if(awayFromDist < 20 && awayFromDist > 10){
-			  setEncSetpoint(1000 * gotTodirection);
+			  setEncSetpoint(1500 * gotTodirection);
 		  }
 		  else if(awayFromDist < 10 && awayFromDist > 1){
-			  setEncSetpoint(500 * gotTodirection);
+			  setEncSetpoint(1000 * gotTodirection);
 		  }
 		  else if(awayFromDist <= 1){
 			  stopEncPID();
@@ -291,7 +296,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		}
 		if (isGearCam){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
-			centerOfCam = 170;
+			centerOfCam = 160;
 		}
 		else if (!isGearCam){
 			SmartDashboard.putString("roor", "Tiger");

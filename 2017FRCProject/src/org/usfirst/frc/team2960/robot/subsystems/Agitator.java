@@ -15,7 +15,7 @@ public class Agitator extends Subsystem implements PeriodicUpdate{
 	public Agitator(){
 		Agitator = new VictorSP(RobotMap.agitator);
 		Agitator2 = new VictorSP(RobotMap.agitator2);
-		speed = 1;
+		speed = .75;
 	}
 
 	

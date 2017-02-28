@@ -18,7 +18,7 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 	DoubleSolenoid GearPusher;
 	DoubleSolenoid Flap;
 	
-	DigitalInput gearButton;
+	public DigitalInput gearButton;
 	DigitalInput gearSensor;
 	boolean autoGearPush = true;
 	boolean pushButtonTripped = false;
