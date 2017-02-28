@@ -7,10 +7,10 @@ public class MoveForwardWithAlignAndPlaceGear extends CommandGroup {
 		addSequential(new MoveForward(-10));
 		addSequential(new AlignToGear());
 		addSequential(new Delay(20));
-		addSequential(new MoveForward(-40));
+		addSequential(new MoveForward(-35));
 		addSequential(new AlignToGear());
 		addSequential(new Delay(20));
-		addSequential(new MoveForward(-17));
+		addSequential(new MoveForwardOrHitButton(-30));
 		addSequential(new MoveForward(20));
 	}
 }

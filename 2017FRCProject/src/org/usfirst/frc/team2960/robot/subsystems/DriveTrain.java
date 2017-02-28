@@ -296,7 +296,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		}
 		if (isGearCam){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
-			centerOfCam = 160;
+			centerOfCam = 180;
 		}
 		else if (!isGearCam){
 			SmartDashboard.putString("roor", "Tiger");
