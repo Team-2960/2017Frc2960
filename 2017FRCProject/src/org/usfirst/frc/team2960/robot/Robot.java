@@ -2,6 +2,8 @@
 package org.usfirst.frc.team2960.robot;
 
 
+import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTarget;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardWithAlignAndPlaceGear;
 import org.usfirst.frc.team2960.robot.subsystems.Agitator;
@@ -51,8 +53,10 @@ public class Robot extends IterativeRobot {
       pdp = new PowerDistributionPanel();
       winch = new Winch();
       
-      AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+      //AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
       //AutonomousCammand = new MoveForwardAndPlaceGear();
+      //AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+      AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
     }
     
     public void disabledInit(){

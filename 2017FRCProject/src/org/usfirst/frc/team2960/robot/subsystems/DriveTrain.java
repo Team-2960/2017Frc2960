@@ -55,6 +55,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	Relay ringLight;
 	public boolean isAutonOnGear = false;
 	public boolean isTurnOnly = true;
+	public boolean autonTurn = false;
 	
 	public DriveTrain(){
 		//Talons
@@ -218,9 +219,9 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 setSetpoint(speedStart * direction);
 			 else if(awayFromTarget < 150 && awayFromTarget > 100)
 				 setSetpoint((speedStart - 10) * direction);
-			 else if(awayFromTarget < 100 && awayFromTarget > 15)
+			 else if(awayFromTarget < 100 && awayFromTarget > 8)
 				 setSetpoint((speedStart - 20) * direction);
-			 else if(awayFromTarget <= 15){
+			 else if(awayFromTarget <= 8){
 				 setSetpoint(0);
 				 autonTurnDone = true;
 			 }
@@ -290,13 +291,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		if(OnOff)
 			turnToTarget();
 		
-		else{
+		else if (!OnOff && !autonTurn){
 			if(turning.isEnabled())
 				 stopPID();
 		}
 		if (isGearCam){
 			pixelsFromEdge = cam2.getPixelsFromEdge();
-			centerOfCam = 180;
+			centerOfCam = 160;
 		}
 		else if (!isGearCam){
 			SmartDashboard.putString("roor", "Tiger");

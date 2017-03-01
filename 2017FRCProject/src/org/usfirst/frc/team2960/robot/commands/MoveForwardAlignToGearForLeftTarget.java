@@ -2,10 +2,10 @@ package org.usfirst.frc.team2960.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class MoveForwardAlignToGearForRightTarget extends CommandGroup {
-	public MoveForwardAlignToGearForRightTarget(){
+public class MoveForwardAlignToGearForLeftTarget extends CommandGroup{	
+	public MoveForwardAlignToGearForLeftTarget(){
 		addSequential(new MoveForward(-75));
-		addSequential(new TurnDegree(.75, -60));
+		addSequential(new TurnDegree(.75, 60));
 		addSequential(new AlignToGear());
 		addSequential(new Delay(20));
 		addSequential(new MoveForward(-30));
@@ -13,5 +13,5 @@ public class MoveForwardAlignToGearForRightTarget extends CommandGroup {
 		addSequential(new Delay(20));
 		addSequential(new MoveForwardOrHitButton(-35));
 		addSequential(new MoveForward(20));
-		}
+	}
 }

@@ -25,7 +25,9 @@ public class TurnDegree extends Command{
 	protected void initialize(){
 	lengthOfTurn.start();
 	Robot.drivetrain.setSetpoint(rate);
+	Robot.drivetrain.autonTurn = true;
 	Robot.drivetrain.startPID();
+	
 	}
 	
 	protected void execute(){
@@ -46,5 +48,7 @@ public class TurnDegree extends Command{
 		Robot.drivetrain.stopPID();
 		lengthOfTurn.stop();
 		lengthOfTurn.reset();
+		Robot.drivetrain.autonTurn = false;
+		
 	}
 }

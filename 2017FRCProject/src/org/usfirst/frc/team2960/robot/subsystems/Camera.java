@@ -39,7 +39,7 @@ public class Camera extends Subsystem implements PeriodicUpdate{
 	public Camera(int cameraPort){  
 		camera = CameraServer.getInstance().startAutomaticCapture(cameraPort);
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-		camera.setBrightness(80);
+		camera.setBrightness(0);
 		startThread();
 	}
 	
