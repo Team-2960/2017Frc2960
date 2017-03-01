@@ -186,6 +186,13 @@ public class OI{
 		else
 			winchToggle = false;
 		
+		if(stick.getRawButton(3)){
+			drive.ringLightOn();
+		}
+		else if(stick.getRawButton(4)){
+			drive.ringLightOff();
+		}
+		
 		
 	
 	}
