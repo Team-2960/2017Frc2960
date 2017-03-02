@@ -11,6 +11,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
+import org.usfirst.frc.team2960.robot.subsystems.Lights;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static GearPusher push;
 	public static PowerDistributionPanel pdp;
 	public static Winch winch;
+	public static Lights lights;
 	
 	Command AutonomousCammand;
 	
@@ -52,6 +54,7 @@ public class Robot extends IterativeRobot {
       push = new GearPusher();
       pdp = new PowerDistributionPanel();
       winch = new Winch();
+      lights = new Lights();
       
       //AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
       //AutonomousCammand = new MoveForwardAndPlaceGear();
@@ -99,7 +102,7 @@ public class Robot extends IterativeRobot {
       }
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
-    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
+    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch, lights);
         periodicUpdate();
         //SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
