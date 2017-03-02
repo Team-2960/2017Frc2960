@@ -128,9 +128,9 @@ public class OI{
 	
 	
 	final double FIRSTSPEED = 20000;
-	final double SECONDSPEED = 23000;
-	final double THIRDSPEED = 24000;
-	final double FOURTHSPEED = 25000;
+	final double SECONDSPEED = 26000;
+	final double THIRDSPEED = 31000;
+	final double FOURTHSPEED = 37000;
 	final double ZEROSPEED = 0;
 	Boolean flap = false;
 	Boolean toggle = true;
@@ -194,8 +194,9 @@ public class OI{
 		}
 		
 		
-	
 	}
+
+	
 	
 	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
 		
