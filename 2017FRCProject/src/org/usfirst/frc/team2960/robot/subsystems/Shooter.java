@@ -80,12 +80,12 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	public void update() {
 		//runShooter();
 		//pulseShooter();
-		SmartDashboard.putNumber("Speed of shooter", speed);
-		SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
-		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
-		SmartDashboard.putBoolean("Shooter Photoeye", shooterPhotoeye.get());
-		SmartDashboard.putBoolean("Shooter PId Enabled", shootPID.isEnabled());
-		SmartDashboard.putNumber("Shooter setpoint", shootPID.getSetpoint());
+		//SmartDashboard.putNumber("Speed of shooter", speed);
+		//SmartDashboard.putNumber("Shooter Encoder Position", shoot.getPosition());
+		//SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
+		//SmartDashboard.putBoolean("Shooter Photoeye", shooterPhotoeye.get());
+		//SmartDashboard.putBoolean("Shooter PId Enabled", shootPID.isEnabled());
+		//SmartDashboard.putNumber("Shooter setpoint", shootPID.getSetpoint());
 	}
 
 	@Override

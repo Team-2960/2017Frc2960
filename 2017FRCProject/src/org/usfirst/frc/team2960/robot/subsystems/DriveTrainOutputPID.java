@@ -14,7 +14,7 @@ public class DriveTrainOutputPID implements PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		drive.addTurn(output, -output);
-		SmartDashboard.putNumber("PID ENC Output VAL", output);
+		//SmartDashboard.putNumber("PID ENC Output VAL", output);
 	}
 
 }

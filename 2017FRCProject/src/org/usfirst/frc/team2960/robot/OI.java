@@ -117,7 +117,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
-import org.usfirst.frc.team2960.robot.subsystems.Lights;
+//import org.usfirst.frc.team2960.robot.subsystems.Lights;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
@@ -140,7 +140,7 @@ public class OI{
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
 		
-		SmartDashboard.putNumber("The axis", stick.getRawAxis(3));
+		//SmartDashboard.putNumber("The axis", stick.getRawAxis(3));
 		if(!drive.isPidGo()){
 			drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
@@ -156,7 +156,10 @@ public class OI{
 		else if (stick.getRawButton(2))
 			push.activateGearPush = false;
 		//camera control
-		
+		if(stick.getRawButton(3))
+			drive.ringLightOn();
+		else if(stick.getRawButton(4))
+			drive.ringLightOff();
 		//change camera
 		//left
 		if(stick.getRawAxis(2)>.85){
@@ -198,7 +201,7 @@ public class OI{
 	
 	}
 	
-	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch, Lights lights ){
+	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
 		
 		//Pusher overide controls
 		if(stick.getRawButton(8)){
@@ -272,7 +275,7 @@ public class OI{
 		
 		// winch control
 		if(stick.getRawButton(1) && !winchToggle){
-			lights.setLights(0, 1, 0);
+			//lights.setLights(0, 1, 0);
 			winch.WinchUP();
 		}
 		else if(!winchToggle)

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Camera extends Subsystem implements PeriodicUpdate{
 	
 	private static final int IMG_WIDTH = 320;

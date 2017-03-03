@@ -24,7 +24,7 @@ public class Delay extends Command {
 	}
 	
 	protected void execute(){
-		SmartDashboard.putNumber("The timer value", timeToDelay.get());
+		//SmartDashboard.putNumber("The timer value", timeToDelay.get());
 	}
 	
 	
