@@ -11,7 +11,7 @@ public MoveForwardAlignToGearForLeftTargetBlue(){
 	addSequential(new MoveForward(-40));
 	addSequential(new AlignToGear());
 	addSequential(new Delay(20));
-	addSequential(new MoveForwardOrHitButton(-25));
+	addSequential(new MoveForwardOrHitButton(-30));
 	addSequential(new MoveForward(20));
 	}
 }
