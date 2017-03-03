@@ -1,6 +1,4 @@
-
 package org.usfirst.frc.team2960.robot;
-
 
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTarget;
@@ -26,12 +24,41 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot {public int autonIndex = 
+
+/********************************************************************************************
+ * ____ _  _ ___ ____ _  _    _  _ ____ ___  ____    ____ ____ _    ____ ____ ___ ____ ____	*  	 
+ * |__| |  |  |  |  | |\ |    |\/| |  | |  \ |___   |___  |___ |    |___ |     |  |  | |__/ *   		 
+ * |  | |__|  |  |__| | \|    |  | |__| |__/ |___   ____| |___ |___ |___ |___  |  |__| |  \ * 
+ * 																							*
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*
+ * 																							*
+ * CHOOSE A NUMBER FROM THE LIST BELOW CORRESPONDING TO THE AUTONOMOUS MODE YOU WANT TO RUN.*
+ * 																							*
+ * AUTONOMOUS MODES LIST																	*
+ * -=-=-=-=-=-=-=-=-=-=-=-=-																*
+ * 0 = Center Gear With NO Camera Align														*
+ * 1 = Center Gear With Camera Align														*
+ * 2 = Right Gear with Camera Align															*
+ * 3 = Left Gear with Camera Align                                    						*
+ * 4 = No Auton                                             								*
+ * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
+ * THIS NUMBER!!! ------>>>>____[*/ 3 /*]____<<<<------ THIS NUMBER HERE					*
+ *                                                                 							*
+ * DO NOT MODIFY ANY OTHER CODE IN THIS FILE OR												*
+ * ANYWHERE ELSE UNLESS YOU KNOW WHAT YOU ARE DOING!										*
+ * 																							*
+ * TO RUN THIS NEW PROGRAM, PRESS THE CIRCULAR GREEN PLAY BUTTON IN THE TOOLBAR ABOVE		*
+ * AND SELECT "WPILib Java Deploy" WHILE CONNECTED TO ROBOT WIFI. IT SHOULD THEN			*
+ * DOWNLOAD AND CHANGES WILL BE REFLECTED BY THE ROBOT.										*
+ *                                                                                   		*
+ ********************************************************************************************/;
   
 	public static OI oi;
 	
 	public static Joystick stick;
 	public static Joystick operator;
+	public static Joystick test;
 	public static DriveTrain drivetrain;
 	public static Shooter shoot;
 	public static Intake intake;
@@ -45,6 +72,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
       oi = new OI();
+      lights = new Lights();
       stick = new Joystick(0);
       operator = new Joystick(1);
       drivetrain = new DriveTrain();
@@ -53,13 +81,26 @@ public class Robot extends IterativeRobot {
       agi = new Agitator();
       push = new GearPusher();
       pdp = new PowerDistributionPanel();
-      winch = new Winch();
-      lights = new Lights();
+      winch = new Winch();     
+      test = new Joystick(2);
       
-      //AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
-      //AutonomousCammand = new MoveForwardAndPlaceGear();
-      //AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
-      AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
+        
+          
+      switch(autonIndex) {
+      	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
+      			 break;
+      	case 1:  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+      			 break;
+      	case 2:  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+      			 break;
+      	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
+      			 break;
+      	case 4:  AutonomousCammand = null;
+      			 break;
+      }
+      
+     
+      
     }
     
     public void disabledInit(){
@@ -102,7 +143,7 @@ public class Robot extends IterativeRobot {
       }
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
-    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch, lights);
+    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
         periodicUpdate();
         //SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
