@@ -117,6 +117,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
+import org.usfirst.frc.team2960.robot.subsystems.Lights;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
@@ -128,9 +129,9 @@ public class OI{
 	
 	
 	final double FIRSTSPEED = 20000;
-	final double SECONDSPEED = 26000;
-	final double THIRDSPEED = 31000;
-	final double FOURTHSPEED = 37000;
+	final double SECONDSPEED = 23000;
+	final double THIRDSPEED = 24000;
+	final double FOURTHSPEED = 25000;
 	final double ZEROSPEED = 0;
 	Boolean flap = false;
 	Boolean toggle = true;
@@ -194,11 +195,10 @@ public class OI{
 		}
 		
 		
+	
 	}
-
 	
-	
-	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch ){
+	public void operateRobot(Joystick stick, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch, Lights lights ){
 		
 		//Pusher overide controls
 		if(stick.getRawButton(8)){
@@ -271,8 +271,10 @@ public class OI{
 			intake.stopIntake();
 		
 		// winch control
-		if(stick.getRawButton(1) && !winchToggle)
+		if(stick.getRawButton(1) && !winchToggle){
+			lights.setLights(0, 1, 0);
 			winch.WinchUP();
+		}
 		else if(!winchToggle)
 			winch.WinchStop();
 		//flap control

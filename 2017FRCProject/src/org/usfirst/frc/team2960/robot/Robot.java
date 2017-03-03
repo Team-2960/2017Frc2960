@@ -10,6 +10,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Camera;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
+import org.usfirst.frc.team2960.robot.subsystems.Lights;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
@@ -67,11 +68,13 @@ public class Robot extends IterativeRobot {public int autonIndex =
 	public static GearPusher push;
 	public static PowerDistributionPanel pdp;
 	public static Winch winch;
+	public static Lights lights;
 	
 	Command AutonomousCammand;
 	
     public void robotInit() {
       oi = new OI();
+      lights = new Lights();
       stick = new Joystick(0);
       operator = new Joystick(1);
       drivetrain = new DriveTrain();
@@ -80,11 +83,11 @@ public class Robot extends IterativeRobot {public int autonIndex =
       agi = new Agitator();
       push = new GearPusher();
       pdp = new PowerDistributionPanel();
-      winch = new Winch();
+      winch = new Winch();     
       test = new Joystick(2);
       
-      
-      
+        
+          
       switch(autonIndex) {
       	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
       			 break;

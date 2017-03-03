@@ -38,6 +38,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	DriveTrainOutputPID moveingOutput;
 	Camera cam;
 	Camera cam2;
+	Lights lights;
 	double pixelsFromEdge = 0.0;
 	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
@@ -83,6 +84,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		moveingInput.setPIDSourceType(PIDSourceType.kRate);
 		speedStart = 40;
 		ringLight = new Relay(RobotMap.ringLight);
+		lights = new Lights();
 	}
 	public void setSpeed(double right, double left){
 		
@@ -222,6 +224,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			 else if(awayFromTarget < 100 && awayFromTarget > 8)
 				 setSetpoint((speedStart - 20) * direction);
 			 else if(awayFromTarget <= 8){
+				 lights.setLights(1, 0, 0);
 				 setSetpoint(0);
 				 autonTurnDone = true;
 			 }
@@ -241,10 +244,12 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public boolean closeToTarget(){
 		  boolean isInRange = false;
 		  if(cam.getYTotal() > 140 && cam.getYTotal() < 160){
+			  lights.setLights(1, 1, 1);
 			  isInRange = true;
 		  }
 		  return isInRange;
 	  }
+		  
 	@Override
 	public void update() {
 		
@@ -253,6 +258,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 isAutonOnGear = true;
 			 }
 		}
+		
+		
 		
 		cam2.update();
 		cam.update();
@@ -331,6 +338,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		pidOIRight = 0;
 		pidOILeft = 0;
 		isTurnOnly = true;
+		
 	}	
 	
 	@Override
