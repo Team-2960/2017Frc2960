@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
       }
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
-    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
+    	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch, lights);
         periodicUpdate();
         //SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
