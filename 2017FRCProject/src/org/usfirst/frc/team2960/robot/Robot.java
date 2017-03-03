@@ -3,6 +3,7 @@ package org.usfirst.frc.team2960.robot;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardToCrossLine;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardWithAlignAndPlaceGear;
 import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.Camera;
@@ -39,8 +40,9 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 0 = Center Gear With NO Camera Align														*
  * 1 = Center Gear With Camera Align														*
  * 2 = Right Gear with Camera Align															*
- * 3 = Left Gear with Camera Align                                    						*
- * 4 = No Auton                                             								*
+ * 3 = Left Gear with Camera Align
+ * 4 = Move forward over line                                    						*
+ * 5 = No Auton                                             								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
  * THIS NUMBER!!! ------>>>>____[*/ 3 /*]____<<<<------ THIS NUMBER HERE					*
  *                                                                 							*
@@ -92,8 +94,10 @@ public class Robot extends IterativeRobot {public int autonIndex =
       			 break;
       	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
       			 break;
-      	case 4:  AutonomousCammand = null;
+      	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
       			 break;
+      	case 5: AutonomousCammand = null;
+      			break;
       }
       
      
