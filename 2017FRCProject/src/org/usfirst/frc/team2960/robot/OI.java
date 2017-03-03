@@ -117,6 +117,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Agitator;
 import org.usfirst.frc.team2960.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2960.robot.subsystems.GearPusher;
 import org.usfirst.frc.team2960.robot.subsystems.Intake;
+import org.usfirst.frc.team2960.robot.subsystems.Lights;
 //import org.usfirst.frc.team2960.robot.subsystems.Lights;
 import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
@@ -137,6 +138,7 @@ public class OI{
 	Boolean toggle = true;
 	boolean winchToggle = false;
 	boolean usingPresets = true;
+	boolean winchLight = false;
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
 		
@@ -275,11 +277,13 @@ public class OI{
 		
 		// winch control
 		if(stick.getRawButton(1) && !winchToggle){
-			//lights.setLights(0, 1, 0);
 			winch.WinchUP();
+			winchLight  = true;
 		}
-		else if(!winchToggle)
+		else if(!winchToggle){
 			winch.WinchStop();
+			winchLight = false;
+		}
 		//flap control
 		if(stick.getRawButton(9))
 			push.flapOn();
@@ -288,6 +292,13 @@ public class OI{
 		
 		
 		
+	}
+	
+	
+	public void controlLights(Lights light){
+		if(winchLight){
+			light.setLights(1, 0, 1);
+		}
 	}
 	
 }

@@ -38,7 +38,6 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	DriveTrainOutputPID moveingOutput;
 	Camera cam;
 	Camera cam2;
-	//Lights lights;
 	double pixelsFromEdge = 0.0;
 	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
