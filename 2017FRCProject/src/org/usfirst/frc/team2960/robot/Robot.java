@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 6 = Left Gear with Camera Align Blue                                    						*
  * 7 = No Auton                                             								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
- * THIS NUMBER!!! ------>>>>____[*/ 6 /*]____<<<<------ THIS NUMBER HERE					*
+ * THIS NUMBER!!! ------>>>>____[*/ 1 /*]____<<<<------ THIS NUMBER HERE					*
  *                                                                 							*
  * DO NOT MODIFY ANY OTHER CODE IN THIS FILE OR												*
  * ANYWHERE ELSE UNLESS YOU KNOW WHAT YOU ARE DOING!										*

@@ -179,7 +179,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  
 	  
 	  public boolean gotToDistance(){
-		  double awayFromDist = distanceForMovement - (((PerInch(lt1.getPosition()) - PerInch(rt1.getPosition())) / 2) * gotTodirection);
+		  //double awayFromDist = distanceForMovement - (((PerInch(lt1.getPosition()) /*- PerInch(rt1.getPosition())) / 2*/) * gotTodirection);
+		  double awayFromDist = distanceForMovement - (PerInch(lt1.getPosition()) * gotTodirection);
 		  SmartDashboard.putNumber("Encoder 1", rt1.getPosition());
 		  SmartDashboard.putNumber("Encoder 2", lt1.getPosition());
 		  SmartDashboard.putNumber("awayFromDist", awayFromDist);

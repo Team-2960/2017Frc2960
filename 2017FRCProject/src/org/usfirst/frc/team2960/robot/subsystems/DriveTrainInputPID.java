@@ -33,7 +33,7 @@ public class DriveTrainInputPID implements PIDSource {
 	  public double pidGet() {
 	    switch (m_pidSource) {
 	      case kRate:
-	        return (double)((drive.getRightEncoder() + drive.getLeftEncoder())/2);
+	        return (double)(drive.getLeftEncoder());//(double)((drive.getRightEncoder() + drive.getLeftEncoder())/2);
 	      case kDisplacement:
 	        return 50.0;
 	      default:
