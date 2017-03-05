@@ -10,9 +10,9 @@ public class Lights extends Subsystem {
 	   DigitalOutput I2;
 	   DigitalOutput I3;
 		public Lights(){
-			I1 = new DigitalOutput(7);
-			I2 = new DigitalOutput(8);
-			I3 = new DigitalOutput(9);
+			I1 = new DigitalOutput(3);
+			I2 = new DigitalOutput(4);
+			I3 = new DigitalOutput(5);
 			
 		}
 		public void setLights(int input1, int input2, int input3){

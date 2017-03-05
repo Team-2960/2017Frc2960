@@ -295,9 +295,11 @@ public class OI{
 	}
 	
 	
-	public void controlLights(Lights light){
-		if(winchLight){
+	public void controlLights(Lights light, DriveTrain drivetrain, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
+		if(push.isGearIn()){
 			light.setLights(1, 0, 1);
+		}else{
+			light.setLights(0, 0, 0);
 		}
 	}
 	

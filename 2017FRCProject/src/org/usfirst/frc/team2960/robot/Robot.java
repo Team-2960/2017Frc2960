@@ -130,6 +130,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
     	shoot.update();
     	drivetrain.update();
     	push.update();
+    	lights.update();
     	
     }
     public void periodicStart(){
@@ -138,6 +139,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
     	drivetrain.start();
     	shoot.start();
     	push.start();
+    	
     }
     /**
      * This function is called periodically during autonomous
@@ -157,7 +159,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
     public void teleopPeriodic() {
     	oi.driveRobot(stick, drivetrain, shoot, intake, agi, push, winch);
     	oi.operateRobot(operator, drivetrain, shoot, intake, agi, push, winch);
-    	oi.controlLights(lights);
+    	oi.controlLights(lights, drivetrain, shoot, intake, agi, push, winch);
         periodicUpdate();
         //SmartDashboard.putNumber("current in Amps", pdp.getCurrent(2));
     }
