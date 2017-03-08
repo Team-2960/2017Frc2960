@@ -99,10 +99,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		 
 	}
 	public void shift(boolean val){
-		if(!val)
+		if(!val){
 			shiftSol.set(Value.kReverse);
+			SmartDashboard.putString("Is in high gear", "False");
+		}
 		else
 			shiftSol.set(Value.kForward);
+		SmartDashboard.putString("Is in high gear", "True");
 		
 	}
 	
