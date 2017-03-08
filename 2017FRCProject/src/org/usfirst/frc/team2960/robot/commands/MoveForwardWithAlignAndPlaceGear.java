@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardWithAlignAndPlaceGear extends CommandGroup {
 	public MoveForwardWithAlignAndPlaceGear(){
-		//addSequential(new MoveForwardUltra);
+		addSequential(new MoveForwardUltra(70, .5));
 		addSequential(new AlignToGear());
-		addSequential(new MoveForward(-25));
+		addSequential(new MoveForwardUltra(20, .5));
 		addSequential(new AlignToGear());
-		//addSequential(new MoveForwardUltra);
-		addSequential(new MoveForward(20));
+		addSequential(new MoveForwardUltra(5, .5));
+		addSequential(new MoveForwardUltra(20, .5));
+		
 	}
 }
 
