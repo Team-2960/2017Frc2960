@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -56,8 +57,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public boolean isAutonOnGear = false;
 	public boolean isTurnOnly = true;
 	public boolean autonTurn = false;
+	Ultrasonic ultra;
 	
 	public DriveTrain(){
+		ultra = new Ultrasonic(6,7);
 		//Talons
 		rt1 = new CANTalon(RobotMap.rt1);
 		rt2 = new CANTalon(RobotMap.rt2);
@@ -149,6 +152,35 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  public void resetGyro(){
 	    gyro.reset();
 	  }
+	  
+	  public double getUltraDist(){
+		  return ultra.getRangeInches();
+	  }
+	  
+	  public boolean moveForwardUltra(double distance, double speed){
+		double away = Math.abs(distance - getUltraDist());
+		double direction;
+		if(distance > getUltraDist()){
+			direction = 1; 
+		}else{
+			direction = -1;
+		}
+		
+		if(away >= 60){
+			setSpeed((speed) * direction, -((speed) * direction));
+		}else if (away < 60 && away > 40){
+			setSpeed((speed * .75) * direction, -((speed * .75) * direction));
+		}else if(away < 40 && away > 20){
+			setSpeed((speed * .5) * direction, -((speed * .5) * direction));
+		}else if(away < 20 && away > 1){
+			setSpeed((speed * .25) * direction,-((speed * .25) * direction));
+		}else if (away <= 1){
+			setSpeed(0,0);
+			return true;
+		}
+		return false;
+	  }
+	  
 	  
 	  public void setTurnToTarget(boolean OnOff){
 		  this.OnOff = OnOff;
@@ -272,6 +304,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 		SmartDashboard.putNumber("Encoder 2 Velocity", lt1.getEncVelocity());
 		
+		SmartDashboard.putNumber("Ultra in inches", ultra.getRangeInches());
+		
 		//SmartDashboard.putNumber("Right movement", pidOIRight);
 		//SmartDashboard.putNumber("Left movement", pidOILeft);
 		
@@ -330,6 +364,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	
 	@Override
 	public void start() {
+		ultra.setEnabled(true);
+		ultra.setAutomaticMode(true);
 		turning.disable();
 		moveing.disable();
 		this.resetGyro();

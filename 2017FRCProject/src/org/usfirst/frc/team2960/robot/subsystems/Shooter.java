@@ -20,7 +20,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	public CANTalon shoot;
 	double speed = 1;//should be .9
 	boolean canMove = false;
-	DigitalInput shooterPhotoeye;
+	//DigitalInput shooterPhotoeye;
 	Timer photoeyeTripped;
 	double photoeyeTime = .3;
 	PIDController shootPID;
@@ -35,7 +35,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 		shootPidInput.setPIDSourceType(PIDSourceType.kRate);
 		shoot.reverseSensor(true);
 		shootPID = new PIDController(RobotMap.p2,RobotMap.i2,RobotMap.d2,shootPidInput,shootPidOutput);
-		shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
+		//shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
 		photoeyeTripped =new Timer();
 	}
 	
@@ -64,16 +64,16 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 			shoot.set(0);
 	}
 	public void pulseShooter(){
-		if(shooterPhotoeye.get()){
+		//if(shooterPhotoeye.get()){
 			speed = 1;
 			photoeyeTripped.start();
-		}
-		else if(photoeyeTripped.get() > photoeyeTime){
+		//}
+		//else if(photoeyeTripped.get() > photoeyeTime){
 			photoeyeTripped.stop();
 			photoeyeTripped.reset();
 			speed = .9;
 		}
-	}
+	//}
 	
 	
 	@Override

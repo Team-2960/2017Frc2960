@@ -44,6 +44,6 @@ public class RobotMap {
 	//DIO
 	public static int GearSensor = 0;
 	public static int GearPushButton = 1;
-	public static int ShooterPhotoeye = 2;
+	//public static int ShooterPhotoeye = 2;
 	
 }
