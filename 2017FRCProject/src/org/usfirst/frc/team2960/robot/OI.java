@@ -35,7 +35,7 @@
 //		//camera control
 //		
 //		//change camera
-//		if(stick.getRawAxis(2)>.85){
+//		if(stick.getRawAxis(2)>.85){w
 //			drive.isGearCam = false;
 //			drive.setTurnToTarget(true);
 //			drive.setPidGo(true);
@@ -141,7 +141,8 @@ public class OI{
 	boolean winchLight = false;
 	
 	public void driveRobot(Joystick stick,  DriveTrain drive, Shooter shoot, Intake intake, Agitator agi, GearPusher push, Winch winch){
-		
+
+		push.activateGearPush = false;
 		//SmartDashboard.putNumber("The axis", stick.getRawAxis(3));
 		if(!drive.isPidGo()){
 			drive.setSpeed(-stick.getRawAxis(5), stick.getRawAxis(1));
@@ -149,14 +150,11 @@ public class OI{
 		else{
 			drive.addTurn(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
+		
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
 			drive.shift(false);
-		if(stick.getRawButton(1))
-			push.activateGearPush = true;
-		else if (stick.getRawButton(2))
-			push.activateGearPush = false;
 		//camera control
 		if(stick.getRawButton(3))
 			drive.ringLightOn();

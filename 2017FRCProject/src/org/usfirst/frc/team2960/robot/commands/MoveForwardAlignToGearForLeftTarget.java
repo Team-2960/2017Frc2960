@@ -4,15 +4,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardAlignToGearForLeftTarget extends CommandGroup{	
 	public MoveForwardAlignToGearForLeftTarget(){
-		//The auton only for red and change later for after southfireld
-		addSequential(new MoveForward(-77));
-		addSequential(new TurnDegree(.75, 90));
+		addSequential(new MoveForwardUltra(90, 1));
+		addSequential(new TurnDegree(1.25, -100));
 		addSequential(new AlignToGear());
-		addSequential(new Delay(20));
-		addSequential(new MoveForward(-30));
+		addSequential(new MoveForwardUltra(35, 1));
 		addSequential(new AlignToGear());
-		addSequential(new Delay(20));
-		addSequential(new MoveForwardOrHitButton(-45));
-		addSequential(new MoveForward(20));
+		addSequential(new MoveForwardUltraOrHitButton(7, .8));
+		addSequential(new MoveForwardUltra(20, 1));
 	}
 }

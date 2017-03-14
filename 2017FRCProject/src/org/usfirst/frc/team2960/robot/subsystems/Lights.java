@@ -1,11 +1,9 @@
 package org.usfirst.frc.team2960.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lights extends Subsystem {
-	   boolean inputA;
-	   boolean inputB;
-	   boolean inputC;
 	   DigitalOutput I1;
 	   DigitalOutput I2;
 	   DigitalOutput I3;
@@ -16,26 +14,24 @@ public class Lights extends Subsystem {
 			
 		}
 		public void setLights(int input1, int input2, int input3){
+			SmartDashboard.putString("The led code", input1 + " " + input2 + " " + input3);
 			if(input1==1)
-				inputA = true;
+				I1.set(true);
 			else
-				inputA = false;
+				I1.set(false);
 			if(input2==1)
-				inputB = true;
+				I2.set(true);
 			else
-				inputB = false;
+				I2.set(false);
 			if(input3==1)
-				inputC = true;
+				I3.set(true);
 			else
-				inputC = false;
+				I3.set(false);
 			
 			
 		}
 		
 		public void update() {
-			I1.set(inputA);
-			I2.set(inputB);
-			I3.set(inputC);
 			// TODO Auto-generated method stub
 			
 		}

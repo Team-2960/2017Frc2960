@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2960.robot.subsystems;
 
+import java.util.Arrays;
+
 import org.usfirst.frc.team2960.robot.PeriodicUpdate;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
@@ -37,8 +39,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	TurnControl turn;
 	DriveTrainInputPID moveingInput;
 	DriveTrainOutputPID moveingOutput;
-	Camera cam;
-	Camera cam2;
+	Camera BoilerCam;
+	Camera GearCam;
 	double pixelsFromEdge = 0.0;
 	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
@@ -58,7 +60,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	public boolean isTurnOnly = true;
 	public boolean autonTurn = false;
 	Ultrasonic ultra;
-	
+	double lastVal[] = {0,0,0,0,0};
 	public DriveTrain(){
 		ultra = new Ultrasonic(6,7);
 		//Talons
@@ -69,8 +71,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt2 = new CANTalon(RobotMap.lt2);
 		lt3 = new CANTalon(RobotMap.lt3);
 		//Camera
-		cam = new Camera(0);
-		cam2 = new Camera(1);
+		BoilerCam = new Camera(0);
+		GearCam = new Camera(1);
 		//solenoids
 		shiftSol = new DoubleSolenoid(RobotMap.shift, RobotMap.shift2);
 		//sensors
@@ -103,9 +105,10 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			shiftSol.set(Value.kReverse);
 			SmartDashboard.putString("Is in high gear", "False");
 		}
-		else
+		else{
 			shiftSol.set(Value.kForward);
-		SmartDashboard.putString("Is in high gear", "True");
+			SmartDashboard.putString("Is in high gear", "True");
+		}
 		
 	}
 	
@@ -157,9 +160,11 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  public double getUltraDist(){
-		  return ultra.getRangeInches();
+		  if(ultra.isRangeValid())
+			  return ultra.getRangeInches();
+		  else
+			  return 0;
 	  }
-	  
 	  public boolean moveForwardUltra(double distance, double speed){
 		double away = Math.abs(distance - getUltraDist());
 		double direction;
@@ -169,13 +174,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			direction = -1;
 		}
 		
-		if(away >= 60){
+		if(away >= 30){
 			setSpeed((speed) * direction, -((speed) * direction));
-		}else if (away < 60 && away > 40){
+		}else if (away < 30 && away > 20){
 			setSpeed((speed * .75) * direction, -((speed * .75) * direction));
-		}else if(away < 40 && away > 20){
+		}else if(away < 20 && away > 10){
 			setSpeed((speed * .5) * direction, -((speed * .5) * direction));
-		}else if(away < 20 && away > 1){
+		}else if(away < 10 && away > 1){
 			setSpeed((speed * .25) * direction,-((speed * .25) * direction));
 		}else if (away <= 1){
 			setSpeed(0,0);
@@ -242,7 +247,6 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  public void turnToTarget(){
-		  
 		 SmartDashboard.putNumber("pixels from edge", pixelsFromEdge);
 		  if(pixelsFromEdge > centerOfCam){
 				 awayFromTarget = pixelsFromEdge - centerOfCam;
@@ -255,15 +259,15 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			 if(awayFromTarget > 150)
 				 setSetpoint(speedStart * direction);
 			 else if(awayFromTarget < 150 && awayFromTarget > 100)
-				 setSetpoint((speedStart - 10) * direction);
+				 setSetpoint((speedStart - 15) * direction);
 			 else if(awayFromTarget < 100 && awayFromTarget > 8)
-				 setSetpoint((speedStart - 20) * direction);
+				 setSetpoint((speedStart - 25) * direction);
 			 else if(awayFromTarget <= 8){
 				 //lights.setLights(1, 0, 0);
 				 setSetpoint(0);
 				 autonTurnDone = true;
 			 }
-			 if(cam2.getYTotal() <= 50){
+			 if(GearCam.getYTotal() <= 50){
 				 if(isGearCam){
 				 setPidGo(false);
 				 OnOff = false;
@@ -278,7 +282,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  public boolean closeToTarget(){
 		  boolean isInRange = false;
-		  if(cam.getYTotal() > 140 && cam.getYTotal() < 160){
+		  if(BoilerCam.getYTotal() > 140 && BoilerCam.getYTotal() < 160){
 			  //lights.setLights(1, 1, 1);
 			  isInRange = true;
 		  }
@@ -288,7 +292,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	@Override
 	public void update() {
 		
-		if(cam2.getYTotal() <= 50){
+		if(GearCam.getYTotal() <= 50){
 			 if(isGearCam){
 				 isAutonOnGear = true;
 			 }
@@ -296,26 +300,27 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 		
 		
-		cam2.update();
-		cam.update();
+		GearCam.update();
+		BoilerCam.update();
 		
-		SmartDashboard.putNumber("cam 0 box number", cam.amount);
-		SmartDashboard.putNumber("cam 2 box number", cam2.amount);
-		//SmartDashboard.putNumber("Gyro Rate", getGyro());
+		SmartDashboard.putNumber("BoilerCam box number", BoilerCam.amount);
+		SmartDashboard.putNumber("GearCam box number", GearCam.amount);
+		SmartDashboard.putNumber("Gyro Rate", getGyro());
 		
 		SmartDashboard.putNumber("Encoder 1 Velocity", rt1.getEncVelocity());
 		
 		SmartDashboard.putNumber("Encoder 2 Velocity", lt1.getEncVelocity());
 		
 		SmartDashboard.putNumber("Ultra in inches", ultra.getRangeInches());
+		//SmartDashboard.putNumber("Ultra in inches test", getUltraDist());
 		
 		//SmartDashboard.putNumber("Right movement", pidOIRight);
 		//SmartDashboard.putNumber("Left movement", pidOILeft);
 		
 		//SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
-		//SmartDashboard.putNumber("Setpoint", turning.getSetpoint());
-		//SmartDashboard.putBoolean("PID ENABlEd", turning.isEnabled());
+		SmartDashboard.putNumber("Setpoint", turning.getSetpoint());
+		SmartDashboard.putBoolean("PID ENABlEd", turning.isEnabled());
 		//SmartDashboard.putNumber("Y total", cam2.yTotal);
 		
 		//SmartDashboard.putBoolean("IS THE ENC PID ON", moveing.isEnabled());
@@ -340,13 +345,13 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 				 stopPID();
 		}
 		if (isGearCam){
-			pixelsFromEdge = cam2.getPixelsFromEdge();
+			pixelsFromEdge = GearCam.getPixelsFromEdge();
 			centerOfCam = 160;
 		}
 		else if (!isGearCam){
-			SmartDashboard.putString("roor", "Tiger");
-			pixelsFromEdge = cam.GetPixelsFromEdgeBoiler();
-			centerOfCam = 180;
+			//SmartDashboard.putString("roor", "Tiger");
+			pixelsFromEdge = BoilerCam.GetPixelsFromEdgeBoiler();
+			centerOfCam = 160;
 		}
 		
 	}
@@ -376,7 +381,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		lt1.setPosition(0);
 		pidOIRight = 0;
 		pidOILeft = 0;
-		isTurnOnly = true;
+		isTurnOnly = false;
 		
 	}	
 	

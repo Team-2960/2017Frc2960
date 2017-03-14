@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveForwardAndPlaceGear extends CommandGroup {
 
 	public MoveForwardAndPlaceGear(){
-		addSequential(new MoveForward(-80));
-		addSequential(new MoveForward(20));
+		//addSequential(new MoveForwardUltra(-80));
+		//addSequential(new MoveForward(20));
 	}
 	
 }

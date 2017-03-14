@@ -74,12 +74,12 @@ public class GearPusher extends Subsystem implements PeriodicUpdate {
 		autoGearPush = On;
 	}
 	public boolean isGearIn(){
-		SmartDashboard.putString("The gear is in", "YES");
+		
 		return gearSensor.get();
 	}
 	@Override
 	public void update() {
-		//SmartDashboard.putBoolean("Gear Button", gearButton.get());
+		SmartDashboard.putBoolean("Gear Button", gearButton.get());
 		SmartDashboard.putBoolean("Gear Sensor", gearSensor.get());
 		if(autoGearPush && activateGearPush)
 			autoPush();

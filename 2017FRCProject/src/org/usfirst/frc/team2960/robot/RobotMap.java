@@ -23,13 +23,20 @@ public class RobotMap {
 	public static int flap = 4;
  	public static int flap2 = 5;
 	//pid
-	public static double p1 = 0.0035;
-	public static double i1 = 0.0001;
-	public static double d1 = 0.002;
+ 	//for non omni
+	//public static double p1 = 0.0035;
+	//public static double i1 = 0.0001;
+	//public static double d1 = 0.002;
 	
+ 	public static double p1 = 0.005;
+ 	public static double i1 = 0.00012;
+ 	public static double d1 = 0.004;
+ 	
 	public static double p2 = .000005;
 	public static double i2 = .0001;
 	public static double d2 = 0;
+
+	
 	
 	public static double p3 = 0.000017;
 	public static double i3 = 0.0002;

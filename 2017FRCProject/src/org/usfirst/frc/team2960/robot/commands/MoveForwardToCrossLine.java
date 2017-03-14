@@ -4,6 +4,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardToCrossLine extends CommandGroup {
 	public MoveForwardToCrossLine(){
-		addSequential(new MoveForwardTime(3));
+		addSequential(new MoveForwardTime(4));
 	}
 }
