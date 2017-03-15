@@ -21,7 +21,12 @@ public class MoveForwardUltraOrHitButton extends Command {
 	}
 	protected void execute(){
 		Robot.drivetrain.shift(false);
-		if(Robot.drivetrain.moveForwardUltra(distance, speed) || !Robot.push.gearButton.get()){
+		Robot.drivetrain.ringLightOn();
+		Robot.drivetrain.isGearCam = true;
+		Robot.drivetrain.setTurnToTarget(true);
+		Robot.drivetrain.setPidGo(true);
+		Robot.drivetrain.isTurnOnly = true;
+		if(Robot.drivetrain.moveForwardUltraAlign(distance, speed) || !Robot.push.gearButton.get()){
 			done = true;
 		}
 	}

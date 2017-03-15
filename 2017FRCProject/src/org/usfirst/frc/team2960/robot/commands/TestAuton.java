@@ -4,6 +4,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class TestAuton extends CommandGroup{
 	public TestAuton(){
-		addSequential(new MoveForwardUltra(60, .5));
+		addSequential(new MoveForwardTime(2));
 	}
 }

@@ -25,7 +25,12 @@ public class MoveForwardTime extends Command {
 	}
 	protected void execute(){
 		Robot.drivetrain.shift(false);
-		Robot.drivetrain.setSpeed(-.5, .5);
+		Robot.drivetrain.ringLightOn();
+		Robot.drivetrain.isGearCam = true;
+		Robot.drivetrain.setTurnToTarget(true);
+		Robot.drivetrain.setPidGo(true);
+		Robot.drivetrain.isTurnOnly = true;
+		Robot.drivetrain.addTurn(-.5, .5);
 	}
 	
 	@Override

@@ -188,7 +188,29 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		}
 		return false;
 	  }
-	  
+	  public boolean moveForwardUltraAlign(double distance, double speed){
+			double away = Math.abs(distance - getUltraDist());
+			double direction;
+			if(distance > getUltraDist()){
+				direction = 1; 
+			}else{
+				direction = -1;
+			}
+			
+			if(away >= 30){
+				addTurn((speed) * direction, -((speed) * direction));
+			}else if (away < 30 && away > 20){
+				addTurn((speed * .75) * direction, -((speed * .75) * direction));
+			}else if(away < 20 && away > 10){
+				addTurn((speed * .5) * direction, -((speed * .5) * direction));
+			}else if(away < 10 && away > 1){
+				addTurn((speed * .25) * direction,-((speed * .25) * direction));
+			}else if (away <= 1){
+				setSpeed(0,0);
+				return true;
+			}
+			return false;
+		  }
 	  
 	  public void setTurnToTarget(boolean OnOff){
 		  this.OnOff = OnOff;
