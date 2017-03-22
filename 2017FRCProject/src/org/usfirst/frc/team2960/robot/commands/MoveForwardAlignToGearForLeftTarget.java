@@ -4,12 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardAlignToGearForLeftTarget extends CommandGroup{	
 	public MoveForwardAlignToGearForLeftTarget(){
-		addSequential(new MoveForwardUltra(90, 1));
+		addSequential(new MoveForwardUltra(93, 1));
 		addSequential(new TurnDegree(1.25, -100));
-		addSequential(new AlignToGear());
-		addSequential(new MoveForwardUltra(35, 1));
-		addSequential(new AlignToGear());
-		addSequential(new MoveForwardUltraOrHitButton(7, .8));
+		addSequential(new MoveForwardUltraOrHitButton(5, .8));
 		addSequential(new MoveForwardUltra(20, 1));
 	}
 }

@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2960.robot;
 
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTarget;
-import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTargetBlue;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTarget;
-import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTargetBlue;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardToCrossLine;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardWithAlignAndPlaceGear;
@@ -52,7 +50,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 7 = No Auton  
  * 8 = test Auton do not use unless your name is alex or malcolm                                            								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
- * THIS NUMBER!!! ------>>>>____[*/ 1 /*]____<<<<------ THIS NUMBER HERE					*
+ * THIS NUMBER!!! ------>>>>____[*/ 3 /*]____<<<<------ THIS NUMBER HERE					*
  *                                                                 							*
  * DO NOT MODIFY ANY OTHER CODE IN THIS FILE OR												*
  * ANYWHERE ELSE UNLESS YOU KNOW WHAT YOU ARE DOING!										*
@@ -106,10 +104,6 @@ public class Robot extends IterativeRobot {public int autonIndex =
       			 break;
       	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
       			 break;
-      	case 5: AutonomousCammand = new MoveForwardAlignToGearForRightTargetBlue();
-      			break;
-      	case 6: AutonomousCammand = new MoveForwardAlignToGearForLeftTargetBlue();
-      			break;
       	case 7: AutonomousCammand = null;
       			break;
       	case 8: AutonomousCammand = new TestAuton();
