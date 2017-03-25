@@ -216,8 +216,8 @@ public class OI{
 		//agitator controls
 		if(stick.getRawButton(4))
 			agi.startAgitator();
-		else if(stick.getRawButton(5))
-			agi.startAgitatorReversed();
+		//else if(stick.getRawButton(5))
+			//agi.startAgitatorReversed();
 		else
 			agi.stopAgitator();
 		
@@ -227,6 +227,7 @@ public class OI{
 		
 		
 		//preset speeds
+		
 		if(usingPresets){
 			if(stick.getRawButton(14)){
 				double range = SECONDSPEED - FIRSTSPEED;
@@ -259,6 +260,7 @@ public class OI{
 				}
 			}
 		
+	
 			
 		//set speed, overide presets
 		
