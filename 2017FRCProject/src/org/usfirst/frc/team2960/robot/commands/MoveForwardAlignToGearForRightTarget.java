@@ -7,7 +7,7 @@ public class MoveForwardAlignToGearForRightTarget extends CommandGroup {
 		addSequential(new MoveForwardUltra(84, 1));
 		addSequential(new TurnDegree(1, 100));
 		addSequential(new MoveForwardUltraOrHitButton(4, .8));
-		addSequential(new Delay(1));
+		addSequential(new Delay(.2));
 		addSequential(new MoveForwardUltra(20, 1));
 		}
 }
