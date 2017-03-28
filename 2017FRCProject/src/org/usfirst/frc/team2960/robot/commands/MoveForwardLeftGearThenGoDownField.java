@@ -10,6 +10,6 @@ public class MoveForwardLeftGearThenGoDownField extends CommandGroup{
 		addSequential(new Delay(.2));
 		addSequential(new MoveForwardUltra(20, 1));
 		addSequential(new TurnDegree(.25,-100));
-		addSequential(new MoveForward(1));
+		addSequential(new MoveForwardTime(15));
 	}
 }
