@@ -216,8 +216,8 @@ public class OI{
 		//agitator controls
 		if(stick.getRawButton(4))
 			agi.startAgitator();
-		//else if(stick.getRawButton(5))
-			//agi.startAgitatorReversed();
+		else if(stick.getRawButton(5))
+			agi.startAgitatorReversed();
 		else
 			agi.stopAgitator();
 		

@@ -11,7 +11,7 @@ public class RobotMap {
 	public static int shooter = 6;//should be 6
 	public static int winch = 7;
 	public static int intake = 8;
-	public static int agitator2 = 7;
+	public static int winch2 = 7;
 	public static int agitator = 8;
 	//Relay
 	public static int ringLight = 0;

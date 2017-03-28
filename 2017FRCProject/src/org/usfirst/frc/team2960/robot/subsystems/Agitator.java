@@ -9,29 +9,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Agitator extends Subsystem implements PeriodicUpdate{
 	
 	VictorSP Agitator;//left
-	VictorSP Agitator2;//right
+	//VictorSP Agitator2;//right
 	double speed;
 	
 	public Agitator(){
 		Agitator = new VictorSP(RobotMap.agitator);
-		Agitator2 = new VictorSP(RobotMap.agitator2);
+		//Agitator2 = new VictorSP(RobotMap.agitator2);
 		speed = 1;
 	}
 
 	
 	public void startAgitator(){
 		Agitator.set(speed);
-		Agitator2.set(-speed);
+		//Agitator2.set(-speed);
 	}
 	
 	public void startAgitatorReversed(){
 		Agitator.set(-speed);
-		Agitator2.set(speed);
+		//Agitator2.set(speed);
 	}
 	
 	public void stopAgitator(){
 		Agitator.set(0);
-		Agitator2.set(0);
+		//Agitator2.set(0);
 	}
 	
 	@Override

@@ -5,29 +5,35 @@ import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Winch extends Subsystem implements PeriodicUpdate{
 
 	CANTalon winch;
+	VictorSP winch2;
 	double speed;
 	
 	
 	public Winch(){
 		winch = new CANTalon(RobotMap.winch);
+		winch2 = new VictorSP(RobotMap.winch2);
 		speed = 1;
 	}
 	
 	public void WinchUP(){
 		winch.set(-speed);
+		winch2.set(speed);
 	}
 	
 	public void WinchDown(){
 		winch.set(speed);
+		winch2.set(-speed);
 	}
 	
 	public void WinchStop(){
 		winch.set(0);
+		winch2.set(0);
 	}
 	
 	@Override

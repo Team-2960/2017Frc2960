@@ -13,7 +13,7 @@ public class ShooterPIDOutput implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		shoot.shoot.set(output);
+		shoot.shoot.set(-output);
 		//SmartDashboard.putNumber("shooter output", output);
 	}
 
