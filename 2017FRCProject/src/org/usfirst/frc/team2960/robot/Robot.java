@@ -3,6 +3,8 @@ package org.usfirst.frc.team2960.robot;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForLeftTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAlignToGearForRightTarget;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardAndPlaceGear;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardLeftGearThenGoDownField;
+import org.usfirst.frc.team2960.robot.commands.MoveForwardRightGearThenGoDownField;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardToCrossLine;
 import org.usfirst.frc.team2960.robot.commands.MoveForwardWithAlignAndPlaceGear;
 import org.usfirst.frc.team2960.robot.commands.TestAuton;
@@ -17,6 +19,7 @@ import org.usfirst.frc.team2960.robot.subsystems.Shooter;
 import org.usfirst.frc.team2960.robot.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -45,8 +48,8 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 2 = Right Gear with Camera Align															*
  * 3 = Left Gear with Camera Align
  * 4 = Move forward over line
- * 5 = Right Gear with Camera Align Blue
- * 6 = Left Gear with Camera Align Blue                                    						*
+ * 5 = Left Gear and Run Down Field - for red side  
+ * 6 = Right Gear and Run Down Field - for Blue side                         				*
  * 7 = No Auton  
  * 8 = test Auton do not use unless your name is alex or malcolm                                            								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
@@ -91,25 +94,42 @@ public class Robot extends IterativeRobot {public int autonIndex =
       winch = new Winch();     
       test = new Joystick(2);
       
-        
-          
-      switch(autonIndex) {
-      	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
-      			 break;
-      	case 1:  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
-      			 break;
-      	case 2:  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
-      			 break;
-      	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
-      			 break;
-      	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
-      			 break;
-      	case 7: AutonomousCammand = null;
-      			break;
-      	case 8: AutonomousCammand = new TestAuton();
-      			break;
+      DigitalOutput autonToggle1 = new DigitalOutput(8);
+      DigitalOutput autonToggle2 = new DigitalOutput(9);
+      
+//        
+//          
+//      switch(autonIndex) {
+//      	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
+//      			 break;
+//      	case 1:  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+//      			 break;
+//      	case 2:  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+//      			 break;
+//      	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
+//      			 break;
+//      	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
+//      			 break;
+//      	case 5: AutonomousCammand = new MoveForwardLeftGearThenGoDownField();
+//      			break;
+//      	case 6: AutonomousCammand = new MoveForwardRightGearThenGoDownField();
+//				break;
+//      	case 7: AutonomousCammand = null;
+//      			break;
+//      	case 8: AutonomousCammand = new TestAuton();
+//      			break;
+//      }
+      if(autonToggle1.get() == true){
+    	  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+    	  SmartDashboard.putString("Auton Selected", "Move Forward With Align and Place Gear");
+      }
+      else if (autonToggle2.get() == true){
+    	  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+    	  SmartDashboard.putString("Auton Selected", "Align to Right Gear Target");
+    	  
       }
       
+
      
       
     }
