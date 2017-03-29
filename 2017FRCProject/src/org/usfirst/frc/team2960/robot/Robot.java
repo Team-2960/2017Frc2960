@@ -166,7 +166,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
     	periodicUpdate();
 
     }
-
+   
     /**
      * This function is called periodically during operator control
      */
