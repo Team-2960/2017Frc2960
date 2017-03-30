@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardLeftGearThenGoDownField extends CommandGroup{
 	public MoveForwardLeftGearThenGoDownField(){
-		addSequential(new MoveForwardUltra(93, 1));
-		addSequential(new TurnDegree(1.25, -100));
-		addSequential(new MoveForwardUltraOrHitButton(4, .8));
+		addSequential(new MoveForwardUltra(85, 1));
+		addSequential(new TurnDegree(1.15, -100));
+		addSequential(new MoveForwardUltraOrHitButton(5, .8));
 		addSequential(new Delay(.2));
 		addSequential(new MoveForwardUltra(20, 1));
 		addSequential(new TurnDegree(.25,-100));

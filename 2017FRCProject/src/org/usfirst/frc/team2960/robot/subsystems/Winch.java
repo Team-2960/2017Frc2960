@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Winch extends Subsystem implements PeriodicUpdate{
 
 	CANTalon winch;
-	VictorSP winch2;
+	CANTalon winch2;
 	double speed;
 	
 	
 	public Winch(){
 		winch = new CANTalon(RobotMap.winch);
-		winch2 = new VictorSP(RobotMap.winch2);
+		winch2 = new CANTalon(RobotMap.winch2);
 		speed = 1;
 	}
 	

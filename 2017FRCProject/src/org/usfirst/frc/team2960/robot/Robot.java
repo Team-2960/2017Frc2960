@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 7 = No Auton  
  * 8 = test Auton do not use unless your name is alex or malcolm                                            								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
- * THIS NUMBER!!! ------>>>>____[*/ 2 /*]____<<<<------ THIS NUMBER HERE					*
+ * THIS NUMBER!!! ------>>>>____[*/ 5 /*]____<<<<------ THIS NUMBER HERE					*
  *                                                                 							*
  * DO NOT MODIFY ANY OTHER CODE IN THIS FILE OR												*
  * ANYWHERE ELSE UNLESS YOU KNOW WHAT YOU ARE DOING!										*
@@ -94,40 +94,40 @@ public class Robot extends IterativeRobot {public int autonIndex =
       winch = new Winch();     
       test = new Joystick(2);
       
-      DigitalOutput autonToggle1 = new DigitalOutput(8);
-      DigitalOutput autonToggle2 = new DigitalOutput(9);
+      //DigitalOutput autonToggle1 = new DigitalOutput(8);
+      //DigitalOutput autonToggle2 = new DigitalOutput(9);
       
-//        
-//          
-//      switch(autonIndex) {
-//      	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
-//      			 break;
-//      	case 1:  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
-//      			 break;
-//      	case 2:  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
-//      			 break;
-//      	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
-//      			 break;
-//      	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
-//      			 break;
-//      	case 5: AutonomousCammand = new MoveForwardLeftGearThenGoDownField();
-//      			break;
-//      	case 6: AutonomousCammand = new MoveForwardRightGearThenGoDownField();
-//				break;
-//      	case 7: AutonomousCammand = null;
-//      			break;
-//      	case 8: AutonomousCammand = new TestAuton();
-//      			break;
+        
+          
+      switch(autonIndex) {
+      	case 0:  AutonomousCammand = new MoveForwardAndPlaceGear();
+      			 break;
+      	case 1:  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+      			 break;
+      	case 2:  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+      			 break;
+      	case 3:  AutonomousCammand = new MoveForwardAlignToGearForLeftTarget();
+      			 break;
+      	case 4:  AutonomousCammand = new MoveForwardToCrossLine();
+      			 break;
+      	case 5: AutonomousCammand = new MoveForwardLeftGearThenGoDownField();
+      			break;
+      	case 6: AutonomousCammand = new MoveForwardRightGearThenGoDownField();
+				break;
+      	case 7: AutonomousCammand = null;
+      			break;
+      	case 8: AutonomousCammand = new TestAuton();
+      			break;
+      }
+//      if(autonToggle1.get() == true){
+//    	  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
+//    	  SmartDashboard.putString("Auton Selected", "Move Forward With Align and Place Gear");
 //      }
-      if(autonToggle1.get() == true){
-    	  AutonomousCammand = new MoveForwardWithAlignAndPlaceGear();
-    	  SmartDashboard.putString("Auton Selected", "Move Forward With Align and Place Gear");
-      }
-      else if (autonToggle2.get() == true){
-    	  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
-    	  SmartDashboard.putString("Auton Selected", "Align to Right Gear Target");
-    	  
-      }
+//      else if (autonToggle2.get() == true){
+//    	  AutonomousCammand = new MoveForwardAlignToGearForRightTarget();
+//    	  SmartDashboard.putString("Auton Selected", "Align to Right Gear Target");
+//    	  
+//      }
       
 
      
