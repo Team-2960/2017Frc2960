@@ -130,7 +130,7 @@ public class OI{
 	
 	
 	final double FIRSTSPEED = 20000;
-	final double SECONDSPEED = 26000;
+	final double SECONDSPEED = 23000;
 	final double THIRDSPEED = 31000;
 	final double FOURTHSPEED = 37000;
 	final double ZEROSPEED = 0;
@@ -150,7 +150,9 @@ public class OI{
 		else{
 			drive.addTurn(-stick.getRawAxis(5), stick.getRawAxis(1));
 		}
-		
+		if(stick.getRawButton(1)){
+			drive.ringLightOn();
+		}
 		if(stick.getRawButton(6))
 			drive.shift(true);
 		if(stick.getRawButton(5))
@@ -214,9 +216,9 @@ public class OI{
 		}
 		
 		//agitator controls
-		if(stick.getRawButton(4))
+		if(stick.getRawButton(5))
 			agi.startAgitator();
-		else if(stick.getRawButton(5))
+		else if(stick.getRawButton(4))
 			agi.startAgitatorReversed();
 		else
 			agi.stopAgitator();

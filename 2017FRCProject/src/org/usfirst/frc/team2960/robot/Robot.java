@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {public int autonIndex =
  * 7 = No Auton  
  * 8 = test Auton do not use unless your name is alex or malcolm                                            								*
  * CHANGE THIS NUMBER TO THE NUMBER OF YOUR CHOICE THAT CORRESPONDS WITH THE LIST ABOVE.    *                                                                              
- * THIS NUMBER!!! ------>>>>____[*/ 5 /*]____<<<<------ THIS NUMBER HERE					*
+ * THIS NUMBER!!! ------>>>>____[*/ 1 /*]____<<<<------ THIS NUMBER HERE					*
  *                                                                 							*
  * DO NOT MODIFY ANY OTHER CODE IN THIS FILE OR												*
  * ANYWHERE ELSE UNLESS YOU KNOW WHAT YOU ARE DOING!										*

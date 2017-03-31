@@ -22,7 +22,7 @@ public class Winch extends Subsystem implements PeriodicUpdate{
 	}
 	
 	public void WinchUP(){
-		winch.set(-speed);
+		winch.set(speed);
 		winch2.set(speed);
 	}
 	
