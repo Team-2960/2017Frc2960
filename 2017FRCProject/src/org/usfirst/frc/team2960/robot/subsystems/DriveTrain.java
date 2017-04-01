@@ -3,6 +3,7 @@ package org.usfirst.frc.team2960.robot.subsystems;
 import java.util.Arrays;
 
 import org.usfirst.frc.team2960.robot.PeriodicUpdate;
+import org.usfirst.frc.team2960.robot.Robot;
 import org.usfirst.frc.team2960.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -174,9 +176,9 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			direction = -1;
 		}
 		
-		if(away >= 30){
+		if(away >= 40){
 			setSpeed((speed) * direction, -((speed) * direction));
-		}else if (away < 30 && away > 20){
+		}else if (away < 40 && away > 20){
 			setSpeed((speed * .75) * direction, -((speed * .75) * direction));
 		}else if(away < 20 && away > 10){
 			setSpeed((speed * .5) * direction, -((speed * .5) * direction));
@@ -269,6 +271,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	  }
 	  
 	  public void turnToTarget(){
+		 
 		 SmartDashboard.putNumber("pixels from edge", pixelsFromEdge);
 		  if(pixelsFromEdge > centerOfCam){
 				 awayFromTarget = pixelsFromEdge - centerOfCam;

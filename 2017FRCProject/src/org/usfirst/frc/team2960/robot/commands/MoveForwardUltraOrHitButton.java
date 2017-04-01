@@ -18,6 +18,7 @@ public class MoveForwardUltraOrHitButton extends Command {
 	}
 	
 	protected void initialize(){
+		Robot.drivetrain.resetGyro();
 	}
 	protected void execute(){
 		Robot.drivetrain.shift(false);

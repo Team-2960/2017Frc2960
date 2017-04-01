@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MoveForwardAlignToGearForRightTarget extends CommandGroup {
 	public MoveForwardAlignToGearForRightTarget(){
-		addSequential(new MoveForwardUltra(84, 1));
-		addSequential(new TurnDegree(1.3, 100));
+		addSequential(new MoveForwardUltra(80, .8));
+		addSequential(new TurnDegree(1, 100));
 		addSequential(new MoveForwardUltraOrHitButton(4, .8));
 		addSequential(new Delay(.2));
 		addSequential(new MoveForwardUltra(20, 1));
