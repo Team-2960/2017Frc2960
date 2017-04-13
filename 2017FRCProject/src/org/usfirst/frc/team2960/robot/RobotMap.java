@@ -33,9 +33,9 @@ public class RobotMap {
  	public static double i1 = 0.00012;
  	public static double d1 = 0.004;
  	//55
-	public static double p2 = .0000065;
+	public static double p2 = .000007;//65
 	public static double i2 = .0001;
-	public static double d2 = .0000375;
+	public static double d2 = .0000377;//375
 	//4
 	
 	
