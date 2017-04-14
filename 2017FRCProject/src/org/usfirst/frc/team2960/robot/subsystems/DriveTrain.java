@@ -176,6 +176,8 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 			direction = -1;
 		}
 		
+		
+		
 		if(away >= 40){
 			setSpeed((speed) * direction, -((speed) * direction));
 		}else if (away < 40 && away > 20){

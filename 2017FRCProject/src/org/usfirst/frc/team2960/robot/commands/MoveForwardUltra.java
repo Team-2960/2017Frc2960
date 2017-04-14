@@ -2,6 +2,7 @@ package org.usfirst.frc.team2960.robot.commands;
 
 import org.usfirst.frc.team2960.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveForwardUltra extends Command {
@@ -20,9 +21,9 @@ public class MoveForwardUltra extends Command {
 	}
 	protected void execute(){
 		Robot.drivetrain.shift(false);
-		if(Robot.drivetrain.moveForwardUltra(distance, speed)){
-			done = true;
-		}
+		done = Robot.drivetrain.moveForwardUltra(distance, speed);
+		
+		
 	}
 	
 	@Override
