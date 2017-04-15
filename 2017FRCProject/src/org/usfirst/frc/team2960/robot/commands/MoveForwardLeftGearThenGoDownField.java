@@ -8,8 +8,9 @@ public class MoveForwardLeftGearThenGoDownField extends CommandGroup{
 		addSequential(new TurnDegree(1.15, -100));
 		addSequential(new MoveForwardUltraOrHitButton(5, .8));
 		addSequential(new Delay(.2));
-		addSequential(new MoveForwardUltra(20, 1));
+		addSequential(new MoveForwardUltra(40, 1));
+		addSequential(new isGearInRobot());
 		addSequential(new TurnDegree(.25,-100));
-		addSequential(new MoveForwardTime(15));
+		addSequential(new MoveForwardTime(1));
 	}
 }
