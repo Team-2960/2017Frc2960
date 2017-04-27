@@ -26,8 +26,10 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 	PIDController shootPID;
 	ShooterPIDInput shootPidInput;
 	ShooterPIDOutput shootPidOutput;
+	public boolean autoMode = false;
+	DriveTrain drive;
 	
-	public Shooter(){
+	public Shooter(DriveTrain drive){
 		shoot = new CANTalon(RobotMap.shooter);
 		shootPidInput = new ShooterPIDInput(this);
 		shootPidOutput = new ShooterPIDOutput(this);
@@ -37,6 +39,7 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 		shootPID = new PIDController(RobotMap.p2,RobotMap.i2,RobotMap.d2,shootPidInput,shootPidOutput);
 		//shooterPhotoeye = new DigitalInput(RobotMap.ShooterPhotoeye);
 		photoeyeTripped =new Timer();
+		this.drive = drive;
 	}
 	
 	
@@ -85,9 +88,23 @@ public class Shooter extends Subsystem implements PeriodicUpdate{
 		SmartDashboard.putNumber("Shooter Encoder Velocity", shoot.getEncVelocity());
 		//SmartDashboard.putBoolean("Shooter Photoeye", shooterPhotoeye.get());
 		//SmartDashboard.putBoolean("Shooter PId Enabled", shootPID.isEnabled());
-		//SmartDashboard.putNumber("Shooter setpoint", shootPID.getSetpoint());
+		SmartDashboard.putNumber("Shooter setpoint", shootPID.getSetpoint());
+		if(autoMode){
+			autoShoot();
+		}
 	}
-
+	public void autoShoot(){
+		double yTotal = drive.getBoilerCam().getYTotal();
+		double[] yDist = {134,157,196};
+		double[] speed = {23750,22300,21600};
+		for(int x =0; x < yDist.length; x++){
+			if(yDist[x] > yTotal){
+				setSetpoint(speed[x]);
+				return;
+			}
+		}
+		
+	}
 	@Override
 	public void start() {
 		shootPID.disable();

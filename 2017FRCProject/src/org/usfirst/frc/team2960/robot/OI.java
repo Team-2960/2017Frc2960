@@ -232,6 +232,7 @@ public class OI{
 		
 		if(usingPresets){
 			if(stick.getRawButton(14)){
+				shoot.autoMode = false;
 				double range = SECONDSPEED - FIRSTSPEED;
 				shoot.setSetpoint(FIRSTSPEED + (range * (1 - stick.getRawAxis(4))));
 				shoot.turnONOFF(true);
@@ -239,23 +240,27 @@ public class OI{
 				
 				}
 			else if(stick.getRawButton(15)){
+				shoot.autoMode = false;
 				double range = THIRDSPEED - SECONDSPEED;
 				shoot.setSetpoint(SECONDSPEED + (range * (1 - stick.getRawAxis(4))));
 				shoot.turnONOFF(true);
 				shoot.startPID();
 				}
 			else if(stick.getRawButton(16)){
+				shoot.autoMode = false;
 				double range = FOURTHSPEED - THIRDSPEED;
 				shoot.setSetpoint(THIRDSPEED + (range * (1 - stick.getRawAxis(4))));
 				shoot.turnONOFF(true);
 				shoot.startPID();
 				}
 			else if(stick.getRawButton(12)){
-				shoot.setSetpoint(FOURTHSPEED);
-				shoot.turnONOFF(true);
-				shoot.startPID();
+				shoot.autoMode = true;
+//				shoot.setSetpoint(FOURTHSPEED);
+//				shoot.turnONOFF(true);
+//				shoot.startPID();
 				}
 			else if(stick.getRawButton(13)){
+				shoot.autoMode = false;
 				shoot.setSetpoint(ZEROSPEED);
 				shoot.turnONOFF(false);
 				shoot.stopPID();

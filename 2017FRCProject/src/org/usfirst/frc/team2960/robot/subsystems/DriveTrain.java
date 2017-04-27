@@ -92,6 +92,9 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		ringLight = new Relay(RobotMap.ringLight);
 		//lights = new Lights();
 	}
+	public Camera getBoilerCam(){
+		return BoilerCam;
+	}
 	public void setSpeed(double right, double left){
 		
 		rt1.set(right); 
@@ -272,16 +275,22 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		  return false;
 	  }
 	  
-	  public void turnToTarget(){
+	  public void turnToTarget(boolean isGear){
 		 
 		 SmartDashboard.putNumber("pixels from edge", pixelsFromEdge);
 		  if(pixelsFromEdge > centerOfCam){
 				 awayFromTarget = pixelsFromEdge - centerOfCam;
-				 direction = 1;
+				 if(isGear)
+					 direction = 1;
+				 else
+					 direction = -1;
 			 }
 			else{
 				 awayFromTarget = centerOfCam - pixelsFromEdge;
-				 direction = -1;
+				 if(isGear)
+					 direction = -1;
+				 else
+					 direction = 1;
 			 }
 			 if(awayFromTarget > 150)
 				 setSetpoint(speedStart * direction);
@@ -346,6 +355,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		
 		//SmartDashboard.putNumber("Pixels from edge", pixelsFromEdge);
 		
+		SmartDashboard.putNumber("BoilerCam yTotal", BoilerCam.yTotal);
 		SmartDashboard.putNumber("Setpoint", turning.getSetpoint());
 		SmartDashboard.putBoolean("PID ENABlEd", turning.isEnabled());
 		//SmartDashboard.putNumber("Y total", cam2.yTotal);
@@ -365,7 +375,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		//SmartDashboard.putNumber("D!!!!!!!!!!!!!!!", moveing.getD());
 		
 		if(OnOff)
-			turnToTarget();
+			turnToTarget(isGearCam);
 		
 		else if (!OnOff && !autonTurn){
 			if(turning.isEnabled())
