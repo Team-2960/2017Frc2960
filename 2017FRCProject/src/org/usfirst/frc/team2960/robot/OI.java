@@ -258,6 +258,8 @@ public class OI{
 //				shoot.setSetpoint(FOURTHSPEED);
 //				shoot.turnONOFF(true);
 //				shoot.startPID();
+				shoot.turnONOFF(true);
+				shoot.startPID();
 				}
 			else if(stick.getRawButton(13)){
 				shoot.autoMode = false;
