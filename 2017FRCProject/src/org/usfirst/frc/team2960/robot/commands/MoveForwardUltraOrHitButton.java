@@ -2,18 +2,21 @@ package org.usfirst.frc.team2960.robot.commands;
 
 import org.usfirst.frc.team2960.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveForwardUltraOrHitButton extends Command {
 	double distance;
 	double speed;
 	boolean done;
+	Timer timeToDelay;
 	public MoveForwardUltraOrHitButton(double distance, double speed){
 		super("MoveForwardUltraOrHitButton");
 		this.distance = distance;
 		this.speed = speed;
 		requires(Robot.drivetrain);
 		requires(Robot.push);
+		timeToDelay = new Timer();
 		done = false;
 	}
 	
@@ -34,7 +37,7 @@ public class MoveForwardUltraOrHitButton extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		if(done){
+		if(done || timeToDelay.get() >= 5){
 			return true;
  		}else{
 			return false;
