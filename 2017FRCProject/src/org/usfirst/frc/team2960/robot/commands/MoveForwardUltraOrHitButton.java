@@ -37,7 +37,7 @@ public class MoveForwardUltraOrHitButton extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		if(done || timeToDelay.get() >= 5){
+		if(done || timeToDelay.get() >= 3){
 			return true;
  		}else{
 			return false;

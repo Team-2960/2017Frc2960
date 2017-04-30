@@ -9,5 +9,9 @@ public class MoveForwardAlignToGearForLeftTarget extends CommandGroup{
 		addSequential(new MoveForwardUltraOrHitButton(5, .8));
 		addSequential(new Delay(.2));
 		addSequential(new MoveForwardUltra(20, 1));
+		addSequential(new isGearInRobot2());
+		addSequential(new MoveForwardUltraOrHitButton(5, .8));
+		addSequential(new Delay(.2));
+		addSequential(new MoveForwardUltra(20, 1));
 	}
 }
