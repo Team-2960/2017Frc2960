@@ -43,6 +43,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 	DriveTrainOutputPID moveingOutput;
 	Camera BoilerCam;
 	Camera GearCam;
+	//GearPusher push;
 	double pixelsFromEdge = 0.0;
 	double pixelsFromEdgeBoiler = 0.0;
 	double speedStart;
@@ -91,6 +92,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		speedStart = 40;
 		ringLight = new Relay(RobotMap.ringLight);
 		//lights = new Lights();
+		//push = new GearPusher();
 	}
 	public Camera getBoilerCam(){
 		return BoilerCam;
@@ -335,7 +337,7 @@ public class DriveTrain extends Subsystem implements PeriodicUpdate  {
 		}
 		
 		
-		
+		//push.autoPush();
 		GearCam.update();
 		BoilerCam.update();
 		
